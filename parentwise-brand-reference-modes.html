@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ParentWise — Brand Reference · Dark / Light</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
+  <script type="module" src="https://unpkg.com/@phosphor-icons/webcomponents@2.1"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ═══════════════════════════════════════
+       FIXED TOKENS (same in both modes)
+    ═══════════════════════════════════════ */
+    :root {
+      --purple-deep:   #5A3D8F;
+      --purple-brand:  #6B4CA3;
+      --purple-hero1:  #7B5AB5;
+      --purple-hero2:  #3D2970;
+      --gold-bright:   #D4B97E;
+      --gold-mid:      #C9A96E;
+      --gold-deep:     #B8943A;
+      --gold-darker:   #8B6419;
+      --on-gold:       #1A0E00;   /* 10.2:1 on gold gradient — never changes */
+      --canvas:        #C9C3B4;
+      --grad-hero:     linear-gradient(155deg, #7B5AB5 0%, #5A3D8F 45%, #3D2970 100%);
+      --grad-gold:     linear-gradient(135deg, #D4B97E 0%, #B8943A 100%);
+      --grad-chapter:  linear-gradient(90deg,  #5A3D8F 0%, #6B4CA3 100%);
+    }
+
+    /* ═══════════════════════════════════════
+       DARK MODE TOKENS
+    ═══════════════════════════════════════ */
+    [data-mode="dark"] {
+      --bg-page:       #1A1A2E;
+      --bg-alt:        #120D24;
+      --bg-card:       #211545;
+      --bg-card-feat:  #2A1A52;
+      --bg-inset:      #0E0919;
+      --bg-overlay:    rgba(107,76,163,.2);
+      --footer-bg:     #08040F;
+
+      --tx-primary:    #F0EAF8;   /* 14.8:1 on bg-page */
+      --tx-secondary:  #C8BAE0;   /* 8.1:1 */
+      --tx-muted:      #9C8BB8;   /* 4.6:1 */
+      --tx-label:      #C9A96E;
+      --tx-serif:      #D4B97E;
+      --tx-code:       #C5B3E0;
+
+      --bd-default:    rgba(255,255,255,.1);
+      --bd-strong:     rgba(255,255,255,.22);
+      --bd-gold:       rgba(212,185,126,.5);
+      --bd-purple:     rgba(107,76,163,.55);
+
+      --icon-color:    #D4B97E;
+      --icon-bg:       rgba(212,185,126,.12);
+
+      /* Badge tokens */
+      --badge-sci-bg:  #2D1E50;
+      --badge-sci-tx:  #C8B4F0;   /* 5.2:1 */
+      --badge-ph-bg:   #1D1338;
+      --badge-ph-tx:   #B8A8D8;   /* 5.0:1 */
+      --badge-ol-tx:   #A897C8;   /* 4.5:1 */
+      --badge-ol-bd:   #7A6A98;
+
+      /* Badge hover */
+      --badge-sci-hbg: #3A2860;
+      --badge-ph-hbg:  #261848;
+      --badge-ol-hbg:  rgba(255,255,255,.06);
+      --badge-gol-hbg: rgba(212,185,126,.12);
+
+      /* Button tokens */
+      --btn-pur-bg:    #6B4CA3;
+      --btn-pur-hbg:   #7D5AB8;   /* lighter purple on hover */
+      --btn-pur-tx:    #FFFFFF;
+      --btn-ol-tx:     #C8BAE0;
+      --btn-ol-bd:     rgba(200,186,224,.4);
+      --btn-ol-hbg:    rgba(255,255,255,.07);
+      --btn-ol-hbd:    rgba(200,186,224,.7);
+      --btn-gol-tx:    #D4B97E;
+      --btn-gol-bd:    #C9A96E;
+      --btn-gol-hbg:   rgba(212,185,126,.1);
+      --btn-gol-hbd:   #D4B97E;
+
+      /* Card tokens */
+      --card-name:     #F0EAF8;
+      --card-price:    #D4B97E;
+      --card-sub:      #9C8BB8;
+      --card-desc:     #C8BAE0;
+      --cbtn-ol-tx:    #C8BAE0;
+      --cbtn-ol-bd:    rgba(200,186,224,.3);
+      --cbtn-ol-htx:   #F0EAF8;
+      --cbtn-ol-hbd:   rgba(200,186,224,.6);
+      --cbtn-ol-hbg:   rgba(255,255,255,.06);
+
+      /* Misc */
+      --pullquote-bg:  rgba(107,76,163,.18);
+      --pq-border:     #C9A96E;
+      --tile-bg:       #1D1338;
+      --tile-bd:       rgba(255,255,255,.09);
+      --tile-tx1:      #F0EAF8;
+      --tile-tx2:      #9C8BB8;
+      --tile-htx:      var(--gold-mid);
+      --swatch-bg:     #1D1338;
+      --swatch-nm:     #F0EAF8;
+      --swatch-hx:     #C9A96E;
+      --swatch-rl:     #9C8BB8;
+      --grad-info-bg:  #1D1338;
+      --grad-nm:       #F0EAF8;
+      --grad-vl:       #9C8BB8;
+      --sp-bar:        linear-gradient(135deg,#D4B97E 0%,#B8943A 100%);
+      --radius-bg:     rgba(212,185,126,.1);
+      --radius-bd:     rgba(212,185,126,.45);
+      --hero-wave:     #1A1A2E;
+      --nav-bg:        #0F0820;
+      --nav-pill-bg:   rgba(255,255,255,.07);
+      --nav-pill-tx:   rgba(255,255,255,.6);
+      --nav-hbg:       rgba(212,185,126,.16);
+      --nav-htx:       #D4B97E;
+      --lbl-line:      linear-gradient(90deg,rgba(201,169,110,.4) 0%,transparent 100%);
+      --code-bg:       #0A0615;
+      --usage-nm:      #F0EAF8;
+      --usage-cbg:     rgba(212,185,126,.1);
+      --usage-ctx:     #C9A96E;
+      --curve-ft-bg:   #1D1338;
+      --curve-ft-tx:   #9C8BB8;
+      --tw-bg:         #211545;
+      --tw-bd:         rgba(255,255,255,.15);
+      --tw-track:      #2D1A50;
+      --tw-dot:        #D4B97E;
+      --tw-lbl:        #C8BAE0;
+      --ft-tag:        rgba(212,185,126,.75);
+      --ft-meta:       rgba(255,255,255,.3);
+
+      /* Hover state annotation colors */
+      --hs-bg:         #1D1338;
+      --hs-bd:         rgba(255,255,255,.09);
+      --hs-before:     rgba(255,255,255,.04);
+      --hs-label-tx:   #9C8BB8;
+      --hs-val-tx:     #D4B97E;
+    }
+
+    /* ═══════════════════════════════════════
+       LIGHT MODE TOKENS
+    ═══════════════════════════════════════ */
+    [data-mode="light"] {
+      --bg-page:       #F5F1E8;
+      --bg-alt:        #FFFFFF;
+      --bg-card:       #FFFFFF;
+      --bg-card-feat:  #FDFAFF;
+      --bg-inset:      #F0ECF8;
+      --bg-overlay:    rgba(107,76,163,.06);
+      --footer-bg:     #5A3D8F;
+
+      --tx-primary:    #1A1A2E;   /* 16.1:1 */
+      --tx-secondary:  #3D2E5A;   /* 9.4:1 */
+      --tx-muted:      #6B5E82;   /* 4.6:1 */
+      --tx-label:      #7A5C1A;   /* 4.5:1 on cream */
+      --tx-serif:      #5A3D8F;
+      --tx-code:       #C5B3E0;
+
+      --bd-default:    #DDD8EC;
+      --bd-strong:     #C5B7D0;
+      --bd-gold:       rgba(184,148,58,.5);
+      --bd-purple:     rgba(107,76,163,.35);
+
+      --icon-color:    #6B4CA3;
+      --icon-bg:       #EDE8F5;
+
+      /* Badge tokens */
+      --badge-sci-bg:  #EDE8F5;
+      --badge-sci-tx:  #3D2070;   /* 7.1:1 */
+      --badge-ph-bg:   #F0ECF8;
+      --badge-ph-tx:   #3D2070;   /* 7.1:1 */
+      --badge-ol-tx:   #5A3D8F;   /* 5.8:1 */
+      --badge-ol-bd:   #9C8BB8;
+
+      /* Badge hover */
+      --badge-sci-hbg: #DDD5F5;
+      --badge-ph-hbg:  #E4DFF5;
+      --badge-ol-hbg:  rgba(90,61,143,.06);
+      --badge-gol-hbg: rgba(184,148,58,.08);
+
+      /* Button tokens */
+      --btn-pur-bg:    #5A3D8F;
+      --btn-pur-hbg:   #6B4CA3;
+      --btn-pur-tx:    #FFFFFF;
+      --btn-ol-tx:     #3D2E5A;
+      --btn-ol-bd:     #9C8BB8;
+      --btn-ol-hbg:    rgba(61,46,90,.05);
+      --btn-ol-hbd:    #5A3D8F;
+      --btn-gol-tx:    #7A5C1A;
+      --btn-gol-bd:    #B8943A;
+      --btn-gol-hbg:   rgba(184,148,58,.08);
+      --btn-gol-hbd:   #8B6419;
+
+      /* Card tokens */
+      --card-name:     #1A1A2E;
+      --card-price:    #7A5C1A;   /* 4.8:1 on white */
+      --card-sub:      #6B5E82;
+      --card-desc:     #3D2E5A;
+      --cbtn-ol-tx:    #5A3D8F;
+      --cbtn-ol-bd:    #C5B7D0;
+      --cbtn-ol-htx:   #3D2070;
+      --cbtn-ol-hbd:   #9C8BB8;
+      --cbtn-ol-hbg:   rgba(90,61,143,.04);
+
+      /* Misc */
+      --pullquote-bg:  rgba(107,76,163,.07);
+      --pq-border:     #B8943A;
+      --tile-bg:       #F8F5FF;
+      --tile-bd:       #DDD8EC;
+      --tile-tx1:      #1A1A2E;
+      --tile-tx2:      #6B5E82;
+      --tile-htx:      var(--purple-brand);
+      --swatch-bg:     #FFFFFF;
+      --swatch-nm:     #1A1A2E;
+      --swatch-hx:     #5A3D8F;
+      --swatch-rl:     #6B5E82;
+      --grad-info-bg:  #F8F5FF;
+      --grad-nm:       #1A1A2E;
+      --grad-vl:       #6B5E82;
+      --sp-bar:        linear-gradient(135deg,#B8943A 0%,#8B6419 100%);
+      --radius-bg:     #EDE8F5;
+      --radius-bd:     rgba(184,148,58,.5);
+      --hero-wave:     #F5F1E8;
+      --nav-bg:        #5A3D8F;
+      --nav-pill-bg:   rgba(255,255,255,.12);
+      --nav-pill-tx:   rgba(255,255,255,.72);
+      --nav-hbg:       rgba(255,255,255,.22);
+      --nav-htx:       #FFFFFF;
+      --lbl-line:      linear-gradient(90deg,rgba(122,92,26,.35) 0%,transparent 100%);
+      --code-bg:       #1A1A2E;
+      --usage-nm:      #1A1A2E;
+      --usage-cbg:     #EDE8F5;
+      --usage-ctx:     #5A3D8F;
+      --curve-ft-bg:   #F0ECF8;
+      --curve-ft-tx:   #6B5E82;
+      --tw-bg:         #EDE8F5;
+      --tw-bd:         #C5B7D0;
+      --tw-track:      #C5B7D0;
+      --tw-dot:        #5A3D8F;
+      --tw-lbl:        #3D2E5A;
+      --ft-tag:        rgba(255,255,255,.88);
+      --ft-meta:       rgba(255,255,255,.55);
+
+      --hs-bg:         #F8F5FF;
+      --hs-bd:         #DDD8EC;
+      --hs-before:     rgba(90,61,143,.04);
+      --hs-label-tx:   #6B5E82;
+      --hs-val-tx:     #5A3D8F;
+    }
+
+    /* ═══════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════ */
+    @keyframes shimmer   { 0%{left:-80%}  100%{left:130%} }
+    @keyframes goldPulse { 0%,100%{box-shadow:0 4px 20px rgba(201,169,110,.45)} 50%{box-shadow:0 8px 36px rgba(201,169,110,.65),0 0 0 5px rgba(201,169,110,.08)} }
+    @keyframes floatY    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+    @keyframes orbDrift  { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-15px)} }
+    @keyframes fadeUp    { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ═══════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════ */
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--canvas);
+      color: var(--tx-primary);
+      min-height: 100vh;
+      padding: 48px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      box-shadow: 0 20px 80px rgba(0,0,0,.25), 0 4px 20px rgba(0,0,0,.12);
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      animation: fadeUp .6s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* Smooth mode transitions on everything except layout/transforms */
+    body, .page * {
+      transition:
+        background-color .35s ease,
+        border-color .28s ease,
+        color .28s ease,
+        box-shadow .28s ease;
+    }
+    /* Prevent transition conflicts on animated/interactive elements */
+    .btn-gold, .btn-gold::before,
+    .cbtn-gold, .cbtn-gold::before {
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+    }
+
+    /* ═══════════════════════════════════════
+       MODE TOGGLE
+    ═══════════════════════════════════════ */
+    .tw {
+      position: fixed; top: 18px; right: 22px; z-index: 200;
+      display: flex; align-items: center; gap: 9px;
+      background: var(--tw-bg); border: 1px solid var(--tw-bd);
+      border-radius: 30px; padding: 7px 14px 7px 10px;
+      cursor: pointer; user-select: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.22);
+    }
+    .tw:hover { border-color: var(--gold-mid); }
+    .tw-track {
+      width:36px; height:20px; background: var(--tw-track);
+      border-radius:10px; position:relative; flex-shrink:0;
+    }
+    .tw-dot {
+      position:absolute; top:3px; left:3px; width:14px; height:14px;
+      background: var(--tw-dot); border-radius:50%;
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1) !important;
+    }
+    [data-mode="light"] .tw-dot { transform: translateX(16px); }
+    .tw-lbl { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--tw-lbl); }
+
+    /* ═══════════════════════════════════════
+       HERO (always dark — brand signature)
+    ═══════════════════════════════════════ */
+    .hero {
+      background: var(--grad-hero);
+      position:relative; padding:44px 52px 110px; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 20%, rgba(255,255,255,.07) 0%,transparent 60%),
+        radial-gradient(ellipse 50% 60% at 85% 80%, rgba(15,8,32,.5) 0%,transparent 60%),
+        radial-gradient(ellipse 40% 40% at 60% 40%, rgba(212,185,126,.08) 0%,transparent 55%);
+    }
+    .hero::after {
+      content:''; position:absolute; bottom:-2px; left:-5%;
+      width:110%; height:90px;
+      background: var(--hero-wave);
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .hero-in { position:relative; z-index:1; max-width:620px; }
+    .hero-tag {
+      display:inline-flex; align-items:center; gap:7px;
+      background:rgba(255,255,255,.1); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.22); border-radius:20px;
+      padding:6px 14px; font-size:10px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,255,255,.82); margin-bottom:20px;
+    }
+    .hero-title {
+      font-size:clamp(26px,4vw,44px); font-weight:700;
+      color:#fff; line-height:1.1; letter-spacing:-.025em; margin-bottom:10px;
+    }
+    .hero-sub {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size:18px; color:rgba(255,255,255,.68); margin-bottom:28px; line-height:1.45;
+    }
+    .hero-meta { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+    .hero-ver  { font-size:11px; color:rgba(255,255,255,.38); letter-spacing:.06em; text-transform:uppercase; }
+    .orb { position:absolute; border-radius:50%; pointer-events:none; animation:orbDrift 8s ease-in-out infinite; }
+    .orb-1 { width:280px;height:280px;background:radial-gradient(circle,rgba(123,90,181,.28) 0%,transparent 70%);top:-80px;right:60px; }
+    .orb-2 { width:200px;height:200px;background:radial-gradient(circle,rgba(212,185,126,.1) 0%,transparent 70%);bottom:60px;right:100px;animation-delay:-3s; }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    .nav {
+      background: var(--nav-bg);
+      padding:12px 52px; display:flex; gap:8px; flex-wrap:wrap;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav a {
+      background:var(--nav-pill-bg); color:var(--nav-pill-tx);
+      border-radius:20px; padding:5px 14px; font-size:10px; font-weight:600;
+      letter-spacing:.05em; text-transform:uppercase; text-decoration:none;
+      cursor:pointer;
+      transition: background-color .15s ease, color .15s ease !important;
+    }
+    .nav a:hover { background:var(--nav-hbg); color:var(--nav-htx); }
+
+    /* ═══════════════════════════════════════
+       CHAPTER BARS
+    ═══════════════════════════════════════ */
+    .ch { background:var(--grad-chapter); padding:14px 52px; display:flex; align-items:center; gap:12px; border-bottom:1px solid rgba(255,255,255,.1); }
+    .ch-n { width:24px;height:24px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0; }
+    .ch-t { font-size:13px; font-weight:700; color:rgba(255,255,255,.92); }
+
+    /* ═══════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════ */
+    .sec { background:var(--bg-page); padding:38px 52px; border-bottom:1px solid var(--bd-default); }
+    .sec.alt { background:var(--bg-alt); }
+    .sec:last-of-type { border-bottom:none; }
+    .sec-hdr { display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px; }
+    .sec-note { font-size:11px;color:var(--tx-muted);font-style:italic; }
+    .lbl {
+      font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--tx-label);margin-bottom:20px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .lbl::after { content:'';flex:1;height:1px;background:var(--lbl-line); }
+
+    /* ═══════════════════════════════════════
+       ░░ GOLD BUTTON ░░
+       Hover: lift + stronger glow + pause float
+       Active: press down
+       Focus: gold outline ring
+    ═══════════════════════════════════════ */
+    .btn-gold {
+      position:relative; display:inline-flex; align-items:center;
+      justify-content:center; gap:8px;
+      background:var(--grad-gold); color:var(--on-gold);
+      border:none; border-radius:8px; padding:13px 28px;
+      font-family:'DM Sans',sans-serif; font-size:12px; font-weight:700;
+      letter-spacing:.07em; text-transform:uppercase;
+      cursor:pointer; overflow:hidden;
+      box-shadow:0 4px 20px rgba(201,169,110,.45);
+      animation:goldPulse 3s ease-in-out infinite, floatY 4s ease-in-out infinite;
+    }
+    .btn-gold::before {
+      content:''; position:absolute; top:-20%; left:-80%;
+      width:50%; height:140%; background:rgba(255,255,255,.2);
+      transform:skewX(-20deg);
+      animation:shimmer 2.8s ease-in-out infinite;
+    }
+    .btn-gold:hover  { transform:translateY(-3px) scale(1.01); box-shadow:0 12px 40px rgba(201,169,110,.65); animation-play-state:paused; filter:brightness(1.06); }
+    .btn-gold:active { transform:translateY(0px)  scale(.98);  box-shadow:0 3px 12px rgba(201,169,110,.4);  animation-play-state:paused; }
+    .btn-gold:focus-visible { outline:2px solid var(--gold-mid); outline-offset:3px; }
+
+    /* ░░ PURPLE BUTTON ░░
+       Hover: lighten + lift
+       Active: darken + press
+       Focus: gold outline ring */
+    .btn-purple {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--btn-pur-bg); color:var(--btn-pur-tx);
+      border:none; border-radius:8px; padding:13px 28px;
+      font-family:'DM Sans',sans-serif; font-size:12px; font-weight:700;
+      letter-spacing:.07em; text-transform:uppercase;
+      cursor:pointer;
+      box-shadow:0 4px 24px rgba(107,76,163,.3);
+      transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+    }
+    .btn-purple:hover  { background:var(--btn-pur-hbg); transform:translateY(-2px); box-shadow:0 8px 30px rgba(107,76,163,.45); }
+    .btn-purple:active { background:var(--purple-deep); transform:translateY(1px);  box-shadow:0 2px 10px rgba(107,76,163,.3); }
+    .btn-purple:focus-visible { outline:2px solid var(--gold-mid); outline-offset:3px; }
+
+    /* ░░ OUTLINE BUTTON ░░
+       Hover: subtle bg fill + stronger border + text darkens
+       Active: press */
+    .btn-ol {
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent; color:var(--btn-ol-tx);
+      border:1.5px solid var(--btn-ol-bd); border-radius:8px;
+      padding:12px 28px; font-family:'DM Sans',sans-serif;
+      font-size:12px; font-weight:700; letter-spacing:.07em;
+      text-transform:uppercase; cursor:pointer;
+      transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease !important;
+    }
+    .btn-ol:hover  { background:var(--btn-ol-hbg); border-color:var(--btn-ol-hbd); color:var(--tx-primary); transform:translateY(-2px); }
+    .btn-ol:active { transform:translateY(1px); }
+    .btn-ol:focus-visible { outline:2px solid var(--gold-mid); outline-offset:3px; }
+
+    /* ░░ GOLD OUTLINE BUTTON ░░
+       Hover: gold tint bg + stronger gold border */
+    .btn-gol {
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent; color:var(--btn-gol-tx);
+      border:1.5px solid var(--btn-gol-bd); border-radius:8px;
+      padding:12px 28px; font-family:'DM Sans',sans-serif;
+      font-size:12px; font-weight:700; letter-spacing:.07em;
+      text-transform:uppercase; cursor:pointer;
+      transition: background-color .18s ease, border-color .18s ease, transform .18s ease !important;
+    }
+    .btn-gol:hover  { background:var(--btn-gol-hbg); border-color:var(--btn-gol-hbd); transform:translateY(-2px); }
+    .btn-gol:active { transform:translateY(1px); }
+    .btn-gol:focus-visible { outline:2px solid var(--gold-mid); outline-offset:3px; }
+
+    .comp-row { display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin-bottom:14px; }
+    .comp-row:last-child { margin-bottom:0; }
+
+    /* ═══════════════════════════════════════
+       ░░ BADGES ░░
+       Each badge has its own hover state
+    ═══════════════════════════════════════ */
+
+    /* Base badge reset */
+    .badge {
+      display:inline-flex; align-items:center;
+      border-radius:20px; padding:5px 14px;
+      font-size:10px; font-weight:700;
+      letter-spacing:.08em; text-transform:uppercase;
+      cursor:default;
+      transition: filter .15s ease, transform .15s ease, background-color .15s ease, border-color .15s ease !important;
+    }
+
+    /* Gold fill — always high contrast */
+    .b-gold { background:var(--grad-gold); color:var(--on-gold); }
+    .b-gold:hover { filter:brightness(1.08); transform:translateY(-1px); }
+    .b-gold:active { transform:translateY(0); filter:brightness(.96); }
+
+    /* Science / purple tint */
+    .b-sci { background:var(--badge-sci-bg); color:var(--badge-sci-tx); }
+    .b-sci:hover { background:var(--badge-sci-hbg); transform:translateY(-1px); }
+    .b-sci:active { transform:translateY(0); }
+
+    /* Phase */
+    .b-ph { background:var(--badge-ph-bg); color:var(--badge-ph-tx); }
+    .b-ph:hover { background:var(--badge-ph-hbg); transform:translateY(-1px); }
+    .b-ph:active { transform:translateY(0); }
+
+    /* Outline */
+    .b-ol { background:transparent; color:var(--badge-ol-tx); border:1.5px solid var(--badge-ol-bd); }
+    .b-ol:hover { background:var(--badge-ol-hbg); border-color:var(--tx-muted); transform:translateY(-1px); }
+    .b-ol:active { transform:translateY(0); }
+
+    /* Gold outline */
+    .b-gol { background:transparent; color:var(--btn-gol-tx); border:1.5px solid var(--btn-gol-bd); }
+    .b-gol:hover { background:var(--badge-gol-hbg); border-color:var(--gold-mid); transform:translateY(-1px); }
+    .b-gol:active { transform:translateY(0); }
+
+    /* ═══════════════════════════════════════
+       ░░ OFFER CARDS ░░
+       Hover: lift + stronger shadow + gold border
+       Featured card: gold glow shadow on hover
+    ═══════════════════════════════════════ */
+    .cards-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .card {
+      background:var(--bg-card); border:1px solid var(--bd-default);
+      border-radius:12px; padding:22px 20px 20px;
+      cursor:pointer;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .28s ease !important;
+    }
+    .card:hover       { transform:translateY(-4px); border-color:var(--bd-gold); box-shadow:0 14px 40px rgba(0,0,0,.16); }
+    .card:active      { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.1); }
+    [data-mode="dark"]  .card:hover { box-shadow:0 14px 40px rgba(0,0,0,.45); }
+    .card.feat        { border:1.5px solid var(--bd-gold); background:var(--bg-card-feat); }
+    .card.feat:hover  { box-shadow:0 14px 40px rgba(212,185,126,.18); }
+    [data-mode="dark"]  .card.feat:hover { box-shadow:0 14px 40px rgba(212,185,126,.3); }
+
+    .card-icon { width:42px;height:42px;background:var(--icon-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px; }
+    .card-bdg  { margin-bottom:10px;min-height:24px; }
+    .card-nm   { font-size:14px;font-weight:700;color:var(--card-name);margin-bottom:4px; }
+    .card-pr   { font-size:20px;font-weight:700;color:var(--card-price);margin-bottom:4px;line-height:1; }
+    .card-sub  { font-size:11px;color:var(--card-sub);margin-bottom:10px; }
+    .card-dsc  { font-size:12px;color:var(--card-desc);line-height:1.6;margin-bottom:16px; }
+
+    /* ░░ CARD BUTTONS ░░ */
+    .cbtn-gold {
+      display:block; width:100%; padding:10px; text-align:center;
+      position:relative; overflow:hidden;
+      font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:.08em; text-transform:uppercase;
+      background:var(--grad-gold); color:var(--on-gold);
+      border:none; border-radius:6px; cursor:pointer;
+      box-shadow:0 4px 14px rgba(201,169,110,.3);
+    }
+    .cbtn-gold::before {
+      content:''; position:absolute; top:-20%; left:-80%;
+      width:50%; height:140%; background:rgba(255,255,255,.2);
+      transform:skewX(-20deg); animation:shimmer 3.2s ease-in-out infinite;
+    }
+    .cbtn-gold:hover  { filter:brightness(1.08); transform:translateY(-1px); box-shadow:0 8px 24px rgba(201,169,110,.5); animation-play-state:paused; }
+    .cbtn-gold:active { filter:brightness(.95); transform:translateY(0); }
+    .cbtn-gold:focus-visible { outline:2px solid var(--gold-mid); outline-offset:3px; }
+
+    .cbtn-ol {
+      display:block; width:100%; padding:9px; text-align:center;
+      font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:.08em; text-transform:uppercase;
+      background:transparent; color:var(--cbtn-ol-tx);
+      border:1.5px solid var(--cbtn-ol-bd); border-radius:6px; cursor:pointer;
+      transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .15s ease !important;
+    }
+    .cbtn-ol:hover  { background:var(--cbtn-ol-hbg); border-color:var(--cbtn-ol-hbd); color:var(--cbtn-ol-htx); transform:translateY(-1px); }
+    .cbtn-ol:active { transform:translateY(0); }
+    .cbtn-ol:focus-visible { outline:2px solid var(--gold-mid); outline-offset:3px; }
+
+    /* ═══════════════════════════════════════
+       INTERACTIVE STATES REFERENCE SECTION
+    ═══════════════════════════════════════ */
+    .states-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+    /* Each state row: label spans both rows; demo on top, annotation below */
+    .state-row {
+      display:grid; grid-template-columns:80px 1fr;
+      align-items:start; gap:8px 14px;
+      padding:12px 14px;
+      background:var(--hs-bg); border:1px solid var(--hs-bd);
+      border-radius:10px;
+    }
+    .state-lbl {
+      font-size:9px; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--hs-label-tx);
+      text-align:right;
+      grid-row:span 2; align-self:center;
+    }
+    .state-val {
+      font-size:10px; color:var(--hs-val-tx);
+      line-height:1.6; font-family:monospace;
+      min-width:0; word-break:break-word; overflow-wrap:anywhere;
+    }
+
+    /* ░░ STATIC HOVER MOCKUPS ░░
+       These look "pre-hovered" so the designer can
+       see the hover state without actually hovering */
+    .demo-hovered-gold {
+      background:var(--grad-gold); color:var(--on-gold);
+      border-radius:6px; padding:8px 16px;
+      font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      display:inline-flex; align-items:center; gap:6px;
+      box-shadow:0 12px 40px rgba(201,169,110,.65);
+      transform:translateY(-3px) scale(1.01);
+      filter:brightness(1.06);
+      animation-play-state:paused;
+      white-space:nowrap;
+    }
+    .demo-hovered-purple {
+      background:var(--btn-pur-hbg); color:#fff;
+      border-radius:6px; padding:8px 16px;
+      font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      display:inline-flex; align-items:center; gap:6px;
+      box-shadow:0 8px 30px rgba(107,76,163,.45);
+      transform:translateY(-2px);
+      white-space:nowrap;
+    }
+    .demo-hovered-ol {
+      background:var(--btn-ol-hbg); color:var(--tx-primary);
+      border:1.5px solid var(--btn-ol-hbd); border-radius:6px;
+      padding:8px 16px; font-size:11px; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      display:inline-flex; align-items:center; gap:6px;
+      transform:translateY(-2px);
+      white-space:nowrap;
+    }
+    .demo-hovered-gol {
+      background:var(--btn-gol-hbg); color:var(--btn-gol-tx);
+      border:1.5px solid var(--btn-gol-hbd); border-radius:6px;
+      padding:8px 16px; font-size:11px; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      display:inline-flex; align-items:center; gap:6px;
+      transform:translateY(-2px);
+      white-space:nowrap;
+    }
+    .demo-active-gold {
+      background:var(--grad-gold); color:var(--on-gold);
+      border-radius:6px; padding:8px 16px;
+      font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      display:inline-flex; align-items:center; gap:6px;
+      box-shadow:0 3px 12px rgba(201,169,110,.4);
+      transform:translateY(0px) scale(.98);
+      filter:brightness(.96);
+      white-space:nowrap;
+    }
+    .demo-focus {
+      background:var(--btn-pur-bg); color:#fff;
+      border-radius:6px; padding:8px 16px;
+      font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      display:inline-flex; align-items:center; gap:6px;
+      outline:2px solid var(--gold-mid); outline-offset:3px;
+      white-space:nowrap;
+    }
+
+    /* Badge hover demos */
+    .demo-badge-hover-gold { background:var(--grad-gold); color:var(--on-gold); filter:brightness(1.08); transform:translateY(-1px); }
+    .demo-badge-hover-sci  { background:var(--badge-sci-hbg); color:var(--badge-sci-tx); transform:translateY(-1px); }
+    .demo-badge-hover-ol   { background:var(--badge-ol-hbg); color:var(--badge-ol-tx); border:1.5px solid var(--tx-muted); transform:translateY(-1px); }
+
+    /* Card hover demo */
+    .demo-card-hover {
+      background:var(--bg-card); border:1px solid var(--bd-gold);
+      border-radius:10px; padding:14px 16px;
+      transform:translateY(-4px);
+    }
+    [data-mode="dark"]  .demo-card-hover { box-shadow:0 14px 40px rgba(0,0,0,.45); }
+    [data-mode="light"] .demo-card-hover { box-shadow:0 14px 40px rgba(0,0,0,.16); }
+
+    /* ═══════════════════════════════════════
+       REST OF COMPONENTS (unchanged from v2.2)
+    ═══════════════════════════════════════ */
+    .palette { display:grid;grid-template-columns:repeat(auto-fill,minmax(126px,1fr));gap:10px; }
+    .sw { border-radius:10px;overflow:hidden;border:1px solid var(--bd-default);cursor:default;transition:transform .15s ease,box-shadow .15s ease !important; }
+    .sw:hover { transform:translateY(-2px); }
+    [data-mode="dark"]  .sw:hover { box-shadow:0 6px 20px rgba(0,0,0,.35); }
+    [data-mode="light"] .sw:hover { box-shadow:0 6px 20px rgba(0,0,0,.1); }
+    .sw-c { height:56px; }
+    .sw-i { padding:9px 12px;background:var(--swatch-bg); }
+    .sw-n { font-size:11px;font-weight:700;color:var(--swatch-nm);margin-bottom:2px; }
+    .sw-h { font-size:11px;font-weight:600;color:var(--swatch-hx); }
+    .sw-r { font-size:10px;color:var(--swatch-rl);margin-top:2px;line-height:1.4; }
+
+    .grad-grid { display:flex;flex-wrap:wrap;gap:12px; }
+    .gi { flex:1;min-width:148px;border-radius:10px;overflow:hidden;border:1px solid var(--bd-default); }
+    .gi-b { height:62px; }
+    .gi-i { padding:10px 12px;background:var(--grad-info-bg); }
+    .gi-n { font-size:11px;font-weight:700;color:var(--grad-nm);margin-bottom:3px; }
+    .gi-v { font-size:9px;color:var(--grad-vl);line-height:1.55;font-family:monospace; }
+
+    .curve-demo { border-radius:10px;overflow:hidden;border:1px solid var(--bd-default);margin-top:20px; }
+    .curve-hero { background:var(--grad-hero);padding:30px 28px 70px;position:relative; }
+    .curve-hero::after { content:'';position:absolute;bottom:-2px;left:-5%;width:110%;height:60px;background:var(--hero-wave);border-radius:50% 50% 0 0/100% 100% 0 0; }
+    .curve-ft { background:var(--curve-ft-bg);padding:13px 20px; }
+    .curve-ft p { font-size:11px;color:var(--curve-ft-tx);font-family:monospace; }
+
+    .type-block { padding:14px 0;border-bottom:1px solid var(--bd-default); }
+    .type-block:last-child { border-bottom:none; }
+    .type-meta { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:4px; }
+    .type-lbl  { font-size:10px;color:var(--tx-label);letter-spacing:.1em;text-transform:uppercase;font-weight:700; }
+    .type-spec { font-size:10px;color:var(--tx-muted);font-style:italic; }
+    .t-disp    { font-size:clamp(24px,3.5vw,40px);font-weight:700;color:var(--tx-primary);letter-spacing:-.025em;line-height:1.1; }
+    .t-disp em { color:var(--purple-brand);font-style:normal; }
+    .t-h1      { font-size:26px;font-weight:700;color:var(--tx-primary);letter-spacing:-.02em; }
+    .t-serif   { font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--tx-serif);line-height:1.45; }
+    .t-body    { font-size:16px;font-weight:400;color:var(--tx-secondary);line-height:1.8; }
+    .t-glbl    { font-size:12px;font-weight:700;color:var(--tx-label);letter-spacing:.14em;text-transform:uppercase; }
+    .t-cap     { font-size:13px;color:var(--tx-muted);line-height:1.55; }
+
+    .pq { background:var(--pullquote-bg);border-left:3px solid var(--pq-border);border-radius:0 8px 8px 0;padding:16px 20px; }
+    .pq p { font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--tx-serif);line-height:1.5; }
+
+    .sp-row { display:flex;align-items:center;gap:14px;padding:5px 0; }
+    .sp-bar { height:8px;border-radius:2px;background:var(--sp-bar);opacity:.6;flex-shrink:0; }
+    .sp-tx  { font-size:11px;color:var(--tx-muted); }
+    .r-row  { display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin-top:20px; }
+    .r-item { display:flex;flex-direction:column;align-items:center;gap:8px; }
+    .r-box  { background:var(--radius-bg);border:1.5px solid var(--radius-bd);width:64px;height:42px; }
+    .r-lbl  { font-size:10px;color:var(--btn-gol-tx);font-weight:600;text-align:center; }
+
+    .tiles-2 { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+    .tiles-3 { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
+    .tile {
+      background:var(--tile-bg);border:1px solid var(--tile-bd);
+      border-radius:10px;padding:16px 18px;cursor:default;
+      transition: border-color .18s ease, background-color .18s ease, transform .18s ease !important;
+    }
+    .tile:hover { border-color:var(--bd-gold); transform:translateY(-2px); }
+    [data-mode="dark"]  .tile:hover { background:var(--bg-card); }
+    [data-mode="light"] .tile:hover { background:var(--bg-inset); }
+    .tile-n  { font-size:10px;font-weight:700;color:var(--tx-label);letter-spacing:.1em;margin-bottom:6px; }
+    .tile-t  { font-size:12px;font-weight:700;color:var(--tile-tx1);margin-bottom:5px; }
+    .tile-b  { font-size:11px;color:var(--tile-tx2);line-height:1.55; }
+    .tile-code { font-family:monospace; }
+
+    .icon-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:10px; }
+    .icard {
+      background:var(--tile-bg);border:1px solid var(--tile-bd);
+      border-radius:10px;padding:16px 10px 12px;
+      display:flex;flex-direction:column;align-items:center;gap:9px;cursor:default;
+      transition: border-color .15s ease, background-color .15s ease, transform .15s ease !important;
+    }
+    .icard:hover { border-color:var(--bd-gold); background:var(--icon-bg); transform:translateY(-2px); }
+    .ic-nm { font-size:10px;font-weight:600;color:var(--tx-muted);text-align:center;line-height:1.4;word-break:break-word; }
+    .ic-tg { font-size:9px;color:var(--btn-gol-tx);opacity:.7;text-align:center; }
+
+    .u-row { display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--bd-default);cursor:default;border-radius:8px;transition:background-color .15s ease !important; }
+    .u-row:last-child { border-bottom:none; }
+    .u-row:hover { background:var(--bg-inset);padding-left:8px; }
+    .u-ic   { width:44px;height:44px;background:var(--icon-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .u-inf  { flex:1; }
+    .u-nm   { font-size:13px;font-weight:700;color:var(--usage-nm);margin-bottom:2px; }
+    .u-dsc  { font-size:11px;color:var(--tx-muted);line-height:1.45; }
+    .u-code { font-family:monospace;font-size:10px;color:var(--usage-ctx);background:var(--usage-cbg);border-radius:4px;padding:4px 10px;white-space:nowrap;font-weight:600; }
+
+    .sz-row  { display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap; }
+    .sz-item { display:flex;flex-direction:column;align-items:center;gap:8px; }
+    .sz-lbl  { font-size:10px;color:var(--tx-muted); }
+
+    .code { background:var(--code-bg);border-radius:8px;padding:18px 22px;overflow-x:auto;border:1px solid var(--bd-default); }
+    .code code { font-family:'Courier New',monospace;font-size:12px;color:var(--tx-code);line-height:1.75;white-space:pre; }
+    .c-hl { color:#B488FF; } .c-v { color:#88D8B0; } .c-g { color:#D4B97E; } .c-cm { color:#5A4D70; }
+
+    .foot { background:var(--footer-bg);padding:28px 52px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08); }
+    .foot-t { font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--ft-tag);line-height:1.6; }
+    .foot-m { font-size:10px;color:var(--ft-meta);letter-spacing:.06em;text-align:right;line-height:1.9;text-transform:uppercase; }
+
+    @media (max-width:660px) {
+      body { padding:0 0 60px; }
+      .hero,.sec,.nav,.ch,.foot { padding-left:22px;padding-right:22px; }
+      .cards-row,.tiles-3,.tiles-2,.states-grid { grid-template-columns:1fr; }
+      .type-spec { display:none; }
+      .tw { top:10px;right:10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MODE TOGGLE -->
+<div class="tw" onclick="toggleMode()">
+  <span id="t-ic" style="font-size:14px;line-height:1;">🌙</span>
+  <div class="tw-track"><div class="tw-dot"></div></div>
+  <span class="tw-lbl" id="t-lb">Dark</span>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="orb orb-1"></div><div class="orb orb-2"></div>
+    <div class="hero-in">
+      <div class="hero-tag"><ph-flower-lotus color="rgba(255,255,255,0.75)" weight="duotone" size="13"></ph-flower-lotus>ParentWise · Brand Design Reference</div>
+      <h1 class="hero-title">Secure Parents.<br>Secure Teens.<br>Secure Future.</h1>
+      <p class="hero-sub">getparentwise.com design system — purple, gold &amp; gradient edition.</p>
+      <div class="hero-meta">
+        <button class="btn-gold"><ph-compass color="#1A1000" weight="duotone" size="14"></ph-compass>View Design System</button>
+        <span class="hero-ver">v2.3 · March 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <a href="#colors">Colors</a><a href="#grads">Gradients</a><a href="#type">Typography</a>
+    <a href="#btns">Buttons</a><a href="#badges">Badges</a><a href="#cards">Cards</a>
+    <a href="#states">Interactive States</a><a href="#motion">Motion</a>
+    <a href="#spacing">Spacing</a><a href="#icons">Icons</a><a href="#code">Code</a>
+  </div>
+
+  <!-- ══════════ CH 1 — VISUAL LANGUAGE ══════════ -->
+  <div class="ch"><div class="ch-n">1</div><div class="ch-t">Visual Language — Color, Gradients, Typography</div></div>
+
+  <!-- COLORS -->
+  <div class="sec" id="colors">
+    <div class="sec-hdr"><div class="lbl" style="margin-bottom:0;">Color Palette</div><div class="sec-note">Purple × Gold — the regal pairing</div></div>
+    <div class="palette" style="margin-top:20px;">
+      <div class="sw"><div class="sw-c" style="background:#5A3D8F;"></div><div class="sw-i"><div class="sw-n">Deep Plum</div><div class="sw-h">#5A3D8F</div><div class="sw-r">Primary brand · headers</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#6B4CA3;"></div><div class="sw-i"><div class="sw-n">Brand Purple</div><div class="sw-h">#6B4CA3</div><div class="sw-r">CTAs · icons on light</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#7B5AB5;"></div><div class="sw-i"><div class="sw-n">Hero Violet</div><div class="sw-h">#7B5AB5</div><div class="sw-r">Gradient start</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#3D2970;"></div><div class="sw-i"><div class="sw-n">Deep Indigo</div><div class="sw-h">#3D2970</div><div class="sw-r">Gradient end</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#D4B97E;"></div><div class="sw-i"><div class="sw-n">Honey Gold</div><div class="sw-h">#D4B97E</div><div class="sw-r">Button start · icons on dark</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#C9A96E;"></div><div class="sw-i"><div class="sw-n">Gold Mid</div><div class="sw-h">#C9A96E</div><div class="sw-r">Labels · text on dark</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#B8943A;"></div><div class="sw-i"><div class="sw-n">Gold Deep</div><div class="sw-h">#B8943A</div><div class="sw-r">Button end · text on light</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#F5F1E8;"></div><div class="sw-i"><div class="sw-n">Warm Cream</div><div class="sw-h">#F5F1E8</div><div class="sw-r">Page bg (light)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#C9C3B4;"></div><div class="sw-i"><div class="sw-n">Greige Canvas</div><div class="sw-h">#C9C3B4</div><div class="sw-r">Page surround (both)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#1A1A2E;"></div><div class="sw-i"><div class="sw-n">Near Black</div><div class="sw-h">#1A1A2E</div><div class="sw-r">Page bg (dark)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#F0EAF8;"></div><div class="sw-i"><div class="sw-n">Ghost Lavender</div><div class="sw-h">#F0EAF8</div><div class="sw-r">Primary text (dark)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background:#EDE8F5;"></div><div class="sw-i"><div class="sw-n">Lavender Tint</div><div class="sw-h">#EDE8F5</div><div class="sw-r">Icon bg · hover (light)</div></div></div>
+    </div>
+  </div>
+
+  <!-- GRADIENTS -->
+  <div class="sec alt" id="grads">
+    <div class="sec-hdr"><div class="lbl" style="margin-bottom:0;">Gradient System</div><div class="sec-note">Source: getparentwise.com</div></div>
+    <div class="grad-grid" style="margin-top:20px;">
+      <div class="gi"><div class="gi-b" style="background:linear-gradient(155deg,#7B5AB5 0%,#5A3D8F 45%,#3D2970 100%);"></div><div class="gi-i"><div class="gi-n">Hero</div><div class="gi-v">155deg · #7B5AB5→#5A3D8F→#3D2970</div></div></div>
+      <div class="gi"><div class="gi-b" style="background:linear-gradient(135deg,#D4B97E 0%,#B8943A 100%);"></div><div class="gi-i"><div class="gi-n">Gold Button</div><div class="gi-v">135deg · #D4B97E→#B8943A</div></div></div>
+      <div class="gi"><div class="gi-b" style="background:linear-gradient(180deg,#1A1A2E 0%,#0F0820 100%);"></div><div class="gi-i"><div class="gi-n">Dark Section</div><div class="gi-v">180deg · #1A1A2E→#0F0820</div></div></div>
+      <div class="gi"><div class="gi-b" style="background:linear-gradient(135deg,#2A1950 0%,#1A1035 100%);"></div><div class="gi-i"><div class="gi-n">Dark Card</div><div class="gi-v">135deg · #2A1950→#1A1035</div></div></div>
+      <div class="gi"><div class="gi-b" style="background:linear-gradient(90deg,#5A3D8F 0%,#6B4CA3 100%);"></div><div class="gi-i"><div class="gi-n">Chapter Bar</div><div class="gi-v">90deg · #5A3D8F→#6B4CA3</div></div></div>
+    </div>
+    <div style="margin-top:20px;"><div class="lbl" style="margin-bottom:12px;">Hero Curve Signature</div>
+      <div class="curve-demo">
+        <div class="curve-hero"><div style="position:relative;z-index:1;"><div style="font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:rgba(255,255,255,.88);margin-bottom:6px;">Your Teen Doesn't Need You to Fix Them</div><div style="font-size:13px;color:rgba(255,255,255,.52);line-height:1.6;">They need to launch from a secure foundation.</div></div></div>
+        <div class="curve-ft"><p>border-radius: 50% 50% 0 0 / 100% 100% 0 0 · height: 90px · left: -5% · width: 110%</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="sec" id="type">
+    <div class="sec-hdr"><div class="lbl" style="margin-bottom:0;">Typography</div><div class="sec-note">DM Sans (UI) · Cormorant Garamond (emotion)</div></div>
+    <div style="margin-top:20px;">
+      <div class="type-block"><div class="type-meta"><div class="type-lbl">Display</div><div class="type-spec">DM Sans · clamp(24–40px) · 700 · purple accent</div></div><div class="t-disp">Your family's <em>secure future.</em></div></div>
+      <div class="type-block"><div class="type-meta"><div class="type-lbl">H1</div><div class="type-spec">DM Sans · 26px · 700</div></div><div class="t-h1">Creating Security During Adolescence</div></div>
+      <div class="type-block"><div class="type-meta"><div class="type-lbl">Serif Pull Quote</div><div class="type-spec">Cormorant Garamond · 21px · Italic · emotion only</div></div><div class="t-serif">"The real work doesn't start with them. It starts with you."</div></div>
+      <div class="type-block"><div class="type-meta"><div class="type-lbl">Body</div><div class="type-spec">DM Sans · 16px · 400 · line-height 1.8</div></div><div class="t-body">Science-backed guidance for entrepreneurial parents of teenagers, because the work starts with you.</div></div>
+      <div class="type-block"><div class="type-meta"><div class="type-lbl">Gold Label</div><div class="type-spec">DM Sans · 12px · 700 · Uppercase · 0.14em</div></div><div class="t-glbl">Phase One · Look Back</div></div>
+      <div class="type-block"><div class="type-meta"><div class="type-lbl">Caption</div><div class="type-spec">DM Sans · 13px · 400</div></div><div class="t-cap">Founded by M. Aurelius Higgs — educator, coach, and global practitioner with 20+ years working with families.</div></div>
+    </div>
+    <div style="margin-top:18px;"><div class="pq"><p>"Insecurity isn't the absence of safety. It is the absence of authorship."</p></div></div>
+  </div>
+
+  <!-- ══════════ CH 2 — COMPONENTS ══════════ -->
+  <div class="ch"><div class="ch-n">2</div><div class="ch-t">Components — Buttons, Badges, Cards</div></div>
+
+  <!-- BUTTONS -->
+  <div class="sec alt" id="btns">
+    <div class="lbl">Button System — hover over each</div>
+    <div class="comp-row">
+      <button class="btn-gold"><ph-arrow-circle-right color="#1A1000" weight="duotone" size="14"></ph-arrow-circle-right>Take a Free Assessment</button>
+      <button class="btn-gold"><ph-compass color="#1A1000" weight="duotone" size="14"></ph-compass>Start Your Pathway</button>
+    </div>
+    <div class="comp-row">
+      <button class="btn-purple"><ph-users-three color="#fff" weight="duotone" size="14"></ph-users-three>Join the Circle</button>
+      <button class="btn-ol"><ph-book-open color="currentColor" weight="duotone" size="14"></ph-book-open>Learn More</button>
+      <button class="btn-gol"><ph-star color="currentColor" weight="duotone" size="14"></ph-star>Explore Pathway</button>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="sec" id="badges">
+    <div class="lbl">Badge System — hover over each</div>
+    <div class="comp-row">
+      <span class="badge b-gold">Most Popular</span>
+      <span class="badge b-sci">Science-Backed</span>
+      <span class="badge b-ph">Phase 1 of 3</span>
+      <span class="badge b-ol">90-Day Journey</span>
+      <span class="badge b-gol">Explore</span>
+      <span class="badge b-gold">Free</span>
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="sec alt" id="cards">
+    <div class="lbl">Offer Cards — hover over each</div>
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-icon"><ph-plant color="var(--icon-color)" weight="duotone" size="22"></ph-plant></div>
+        <div class="card-bdg"></div>
+        <div class="card-nm">ParentWise First Steps</div>
+        <div class="card-pr">Free</div>
+        <div class="card-sub">A Tiny 5-Day Challenge</div>
+        <div class="card-dsc">Begin where you have the greatest influence — yourself.</div>
+        <button class="cbtn-ol">Start Your Challenge</button>
+      </div>
+      <div class="card feat">
+        <div class="card-icon"><ph-globe-hemisphere-west color="var(--icon-color)" weight="duotone" size="22"></ph-globe-hemisphere-west></div>
+        <div class="card-bdg"><span class="badge b-gold">Most Popular</span></div>
+        <div class="card-nm">Circle of Secure Parents</div>
+        <div class="card-pr">$7/mo</div>
+        <div class="card-sub">Community Membership</div>
+        <div class="card-dsc">A worldwide community committed to growth first. Secure parents, secure teens.</div>
+        <button class="cbtn-gold">Join the Circle</button>
+      </div>
+      <div class="card">
+        <div class="card-icon"><ph-compass color="var(--icon-color)" weight="duotone" size="22"></ph-compass></div>
+        <div class="card-bdg"></div>
+        <div class="card-nm">ParentWise Pathway</div>
+        <div class="card-pr">From $3K</div>
+        <div class="card-sub">90-Day 1:1 Journey</div>
+        <div class="card-dsc">Built around your family, your patterns, and your goals.</div>
+        <button class="cbtn-ol">Explore Your Pathway</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CH 3 — INTERACTIVE STATES ══════════ -->
+  <div class="ch"><div class="ch-n">3</div><div class="ch-t">Interactive States — Hover, Active, Focus Documented</div></div>
+
+  <!-- BUTTON STATES -->
+  <div class="sec" id="states" style="padding-top:42px;">
+    <div class="lbl" style="margin-bottom:24px;">Button States</div>
+
+    <!-- Gold button -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-label);margin-bottom:12px;">Gold Button</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div class="state-row">
+          <div class="state-lbl">Default</div>
+          <button class="btn-gold" style="padding:8px 16px;font-size:11px;pointer-events:none;animation:goldPulse 3s ease-in-out infinite,floatY 4s ease-in-out infinite;">Join Now</button>
+          <div class="state-val">Pulse + float<br>animations active</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">:hover</div>
+          <div class="demo-hovered-gold"><ph-arrow-circle-right color="#1A1000" weight="duotone" size="13"></ph-arrow-circle-right>Join Now</div>
+          <div class="state-val">translateY(-3px)<br>scale(1.01)<br>glow 0 12px 40px .65<br>animations paused</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">:active</div>
+          <div class="demo-active-gold">Join Now</div>
+          <div class="state-val">translateY(0)<br>scale(.98)<br>glow reduced<br>filter: brightness(.96)</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">:focus</div>
+          <div class="demo-focus" style="background:var(--grad-gold);color:var(--on-gold);">Join Now</div>
+          <div class="state-val">outline: 2px solid<br>var(--gold-mid)<br>outline-offset: 3px</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purple button -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-label);margin-bottom:12px;">Purple Button</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div class="state-row">
+          <div class="state-lbl">Default</div>
+          <button class="btn-purple" style="padding:8px 16px;font-size:11px;pointer-events:none;">Join Circle</button>
+          <div class="state-val">bg: var(--btn-pur-bg)<br>shadow: 0 4px 24px .3</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">:hover</div>
+          <div class="demo-hovered-purple">Join Circle</div>
+          <div class="state-val">bg: var(--btn-pur-hbg)<br>translateY(-2px)<br>shadow 0 8px 30px .45</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">:active</div>
+          <button class="btn-purple" style="padding:8px 16px;font-size:11px;pointer-events:none;background:var(--purple-deep);transform:translateY(1px);box-shadow:0 2px 10px rgba(107,76,163,.3);">Join Circle</button>
+          <div class="state-val">bg: var(--purple-deep)<br>translateY(1px)<br>shadow reduced</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">:focus</div>
+          <div class="demo-focus">Join Circle</div>
+          <div class="state-val">outline: 2px solid<br>var(--gold-mid)<br>outline-offset: 3px</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Outline buttons -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-label);margin-bottom:12px;">Outline &amp; Gold Outline Buttons</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div class="state-row">
+          <div class="state-lbl">Outline<br>Default</div>
+          <button class="btn-ol" style="padding:8px 16px;font-size:11px;pointer-events:none;">Learn More</button>
+          <div class="state-val">Transparent bg<br>border: var(--btn-ol-bd)</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">Outline<br>:hover</div>
+          <div class="demo-hovered-ol">Learn More</div>
+          <div class="state-val">bg: var(--btn-ol-hbg)<br>border: var(--btn-ol-hbd)<br>color: var(--tx-primary)<br>translateY(-2px)</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">Gold Ol.<br>Default</div>
+          <button class="btn-gol" style="padding:8px 16px;font-size:11px;pointer-events:none;">Explore</button>
+          <div class="state-val">Transparent bg<br>border: var(--btn-gol-bd)<br>color: var(--btn-gol-tx)</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">Gold Ol.<br>:hover</div>
+          <div class="demo-hovered-gol">Explore</div>
+          <div class="state-val">bg: var(--btn-gol-hbg)<br>border: var(--btn-gol-hbd)<br>translateY(-2px)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badge states -->
+    <div class="lbl" style="margin-bottom:16px;">Badge States</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:28px;">
+      <div class="state-row">
+        <div class="state-lbl">Gold<br>:hover</div>
+        <span class="badge b-gold demo-badge-hover-gold">Most Popular</span>
+        <div class="state-val">filter:brightness(1.08)<br>translateY(-1px)</div>
+      </div>
+      <div class="state-row">
+        <div class="state-lbl">Science<br>:hover</div>
+        <span class="badge demo-badge-hover-sci" style="background:var(--badge-sci-hbg);color:var(--badge-sci-tx);transform:translateY(-1px);">Science-Backed</span>
+        <div class="state-val">bg: var(--badge-sci-hbg)<br>translateY(-1px)</div>
+      </div>
+      <div class="state-row">
+        <div class="state-lbl">Outline<br>:hover</div>
+        <span class="badge demo-badge-hover-ol" style="background:var(--badge-ol-hbg);color:var(--badge-ol-tx);border:1.5px solid var(--tx-muted);transform:translateY(-1px);">90-Day</span>
+        <div class="state-val">bg: subtle fill<br>border strengthens<br>translateY(-1px)</div>
+      </div>
+      <div class="state-row">
+        <div class="state-lbl">All badges<br>:active</div>
+        <span class="badge b-gold" style="transform:translateY(0);filter:brightness(.96);">Most Popular</span>
+        <div class="state-val">translateY(0)<br>filter:brightness(.96)</div>
+      </div>
+    </div>
+
+    <!-- Card states -->
+    <div class="lbl" style="margin-bottom:16px;">Card States</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="state-row">
+        <div class="state-lbl">Standard<br>:hover</div>
+        <div class="demo-card-hover" style="width:100%;min-width:0;">
+          <div style="font-size:12px;font-weight:700;color:var(--card-name);margin-bottom:4px;">ParentWise First Steps</div>
+          <div style="font-size:11px;color:var(--card-sub);">5-Day Challenge</div>
+        </div>
+        <div class="state-val">translateY(-4px)<br>border→gold<br>shadow deepens</div>
+      </div>
+      <div class="state-row">
+        <div class="state-lbl">Featured<br>:hover</div>
+        <div class="demo-card-hover" style="width:100%;min-width:0;border:1.5px solid var(--bd-gold);">
+          <div style="font-size:12px;font-weight:700;color:var(--card-name);margin-bottom:4px;">Circle of Secure Parents</div>
+          <div style="font-size:11px;color:var(--card-sub);">Community · $7/mo</div>
+        </div>
+        <div class="state-val">translateY(-4px)<br>gold glow shadow<br>rgba(212,185,126,.25)</div>
+      </div>
+    </div>
+
+    <!-- Card button states -->
+    <div style="margin-top:20px;"><div class="lbl" style="margin-bottom:16px;">Card Button States</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div class="state-row">
+          <div class="state-lbl">Gold Card<br>Btn :hover</div>
+          <button class="cbtn-gold" style="width:auto;padding:8px 16px;font-size:11px;pointer-events:none;filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,169,110,.5);">Join Circle</button>
+          <div class="state-val">filter:brightness(1.08)<br>translateY(-1px)<br>shadow 0 8px 24px .5</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">Outline Card<br>Btn :hover</div>
+          <button class="cbtn-ol" style="width:auto;padding:8px 16px;font-size:11px;pointer-events:none;background:var(--cbtn-ol-hbg);border-color:var(--cbtn-ol-hbd);color:var(--cbtn-ol-htx);transform:translateY(-1px);">Explore</button>
+          <div class="state-val">bg: subtle fill<br>border strengthens<br>color: tx-primary equiv</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">Usage map<br>row :hover</div>
+          <div style="width:100%;min-width:0;background:var(--bg-inset);border-radius:8px;padding:8px 10px;">
+            <div style="font-size:12px;font-weight:700;color:var(--usage-nm);">ParentWise Pathway</div>
+            <div style="font-size:10px;color:var(--tx-muted);margin-top:2px;">90-day flagship</div>
+          </div>
+          <div class="state-val">bg: bg-inset fills<br>padding-left shifts in<br>subtle reveal</div>
+        </div>
+        <div class="state-row">
+          <div class="state-lbl">Focus ring<br>(all elements)</div>
+          <div class="demo-focus" style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">Any Button</div>
+          <div class="state-val">outline: 2px solid<br>var(--gold-mid)<br>outline-offset: 3px<br>keyboard nav only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CH 4 — MOTION + SPACING ══════════ -->
+  <div class="ch"><div class="ch-n">4</div><div class="ch-t">Motion Tokens · Spacing · Radius</div></div>
+
+  <div class="sec" id="motion">
+    <div class="lbl">Motion Tokens</div>
+    <div class="tiles-2">
+      <div class="tile"><div class="tile-t tile-code">Fade Slide In</div><div class="tile-b tile-code">opacity: 0→1 · translateY: 20px→0<br>0.6s cubic-bezier(0.22,1,0.36,1)</div></div>
+      <div class="tile"><div class="tile-t tile-code">Gold Button Pulse</div><div class="tile-b tile-code">goldPulse · box-shadow glow · 3s ∞</div></div>
+      <div class="tile"><div class="tile-t tile-code">Float Y-axis</div><div class="tile-b tile-code">translateY: 0→-4px→0 · 4s ∞</div></div>
+      <div class="tile"><div class="tile-t tile-code">Shine Sweep ::before</div><div class="tile-b tile-code">skewX(-20deg) · left: -80%→130%<br>rgba(255,255,255,0.2) · 2.8s ∞</div></div>
+      <div class="tile"><div class="tile-t tile-code">Orb Drift (hero)</div><div class="tile-b tile-code">translate(0,0)→(20,-15) · 8s ∞<br>staggered animation-delay</div></div>
+      <div class="tile"><div class="tile-t tile-code">Mode Switch</div><div class="tile-b tile-code">background-color .35s ease<br>border-color / color .28s ease</div></div>
+    </div>
+  </div>
+
+  <div class="sec alt" id="spacing">
+    <div class="sec-hdr"><div class="lbl" style="margin-bottom:0;">Spacing &amp; Radius</div><div class="sec-note">Base unit: 4px · max-width: 900px</div></div>
+    <div style="margin-top:20px;">
+      <div class="sp-row"><div class="sp-bar" style="width:4px;"></div><div class="sp-tx">4px — tight: icon padding, inline gaps</div></div>
+      <div class="sp-row"><div class="sp-bar" style="width:8px;"></div><div class="sp-tx">8px — compact: badge padding, small gaps</div></div>
+      <div class="sp-row"><div class="sp-bar" style="width:16px;"></div><div class="sp-tx">16px — base: component padding</div></div>
+      <div class="sp-row"><div class="sp-bar" style="width:24px;"></div><div class="sp-tx">24px — section: card padding, list rhythm</div></div>
+      <div class="sp-row"><div class="sp-bar" style="width:40px;"></div><div class="sp-tx">40px — open: between major sections</div></div>
+      <div class="sp-row"><div class="sp-bar" style="width:64px;"></div><div class="sp-tx">64px — hero: top/bottom padding</div></div>
+    </div>
+    <div class="r-row">
+      <div class="r-item"><div class="r-box" style="border-radius:6px;"></div><div class="r-lbl">6px · badges</div></div>
+      <div class="r-item"><div class="r-box" style="border-radius:8px;"></div><div class="r-lbl">8px · buttons</div></div>
+      <div class="r-item"><div class="r-box" style="border-radius:12px;"></div><div class="r-lbl">12px · cards</div></div>
+      <div class="r-item"><div class="r-box" style="border-radius:16px;"></div><div class="r-lbl">16px · containers</div></div>
+      <div class="r-item"><div style="width:80px;height:42px;background:var(--radius-bg);border:1.5px solid var(--radius-bd);border-radius:50% 50% 0 0/100% 100% 0 0;"></div><div class="r-lbl">Hero wave</div></div>
+    </div>
+  </div>
+
+  <!-- ══════════ CH 5 — ICONS ══════════ -->
+  <div class="ch"><div class="ch-n">5</div><div class="ch-t">Icon System — Phosphor · Duotone · Purple (light) / Gold (dark)</div></div>
+
+  <div class="sec" id="icons">
+    <div class="lbl">Core &amp; Coaching Icons — hover any icon</div>
+    <div class="icon-grid">
+      <div class="icard"><ph-plant color="var(--icon-color)" weight="duotone" size="30"></ph-plant><div class="ic-nm">ph-plant</div><div class="ic-tg">First Steps</div></div>
+      <div class="icard"><ph-globe-hemisphere-west color="var(--icon-color)" weight="duotone" size="30"></ph-globe-hemisphere-west><div class="ic-nm">ph-globe-hemisphere-west</div><div class="ic-tg">Circle</div></div>
+      <div class="icard"><ph-compass color="var(--icon-color)" weight="duotone" size="30"></ph-compass><div class="ic-nm">ph-compass</div><div class="ic-tg">Pathway</div></div>
+      <div class="icard"><ph-shield-check color="var(--icon-color)" weight="duotone" size="30"></ph-shield-check><div class="ic-nm">ph-shield-check</div><div class="ic-tg">Security</div></div>
+      <div class="icard"><ph-users-three color="var(--icon-color)" weight="duotone" size="30"></ph-users-three><div class="ic-nm">ph-users-three</div><div class="ic-tg">Family</div></div>
+      <div class="icard"><ph-heart color="var(--icon-color)" weight="duotone" size="30"></ph-heart><div class="ic-nm">ph-heart</div><div class="ic-tg">Connection</div></div>
+      <div class="icard"><ph-flower-lotus color="var(--icon-color)" weight="duotone" size="30"></ph-flower-lotus><div class="ic-nm">ph-flower-lotus</div><div class="ic-tg">Brand mark</div></div>
+      <div class="icard"><ph-brain color="var(--icon-color)" weight="duotone" size="30"></ph-brain><div class="ic-nm">ph-brain</div><div class="ic-tg">Attachment</div></div>
+      <div class="icard"><ph-chat-circle-dots color="var(--icon-color)" weight="duotone" size="30"></ph-chat-circle-dots><div class="ic-nm">ph-chat-circle-dots</div><div class="ic-tg">Coaching</div></div>
+      <div class="icard"><ph-lightbulb color="var(--icon-color)" weight="duotone" size="30"></ph-lightbulb><div class="ic-nm">ph-lightbulb</div><div class="ic-tg">Insight</div></div>
+      <div class="icard"><ph-seal-check color="var(--icon-color)" weight="duotone" size="30"></ph-seal-check><div class="ic-nm">ph-seal-check</div><div class="ic-tg">Science-backed</div></div>
+      <div class="icard"><ph-book-open color="var(--icon-color)" weight="duotone" size="30"></ph-book-open><div class="ic-nm">ph-book-open</div><div class="ic-tg">Learning</div></div>
+      <div class="icard"><ph-hand-heart color="var(--icon-color)" weight="duotone" size="30"></ph-hand-heart><div class="ic-nm">ph-hand-heart</div><div class="ic-tg">Repair</div></div>
+      <div class="icard"><ph-sparkle color="var(--icon-color)" weight="duotone" size="30"></ph-sparkle><div class="ic-nm">ph-sparkle</div><div class="ic-tg">Transform</div></div>
+      <div class="icard"><ph-arrow-circle-right color="var(--icon-color)" weight="duotone" size="30"></ph-arrow-circle-right><div class="ic-nm">ph-arrow-circle-right</div><div class="ic-tg">CTA</div></div>
+    </div>
+
+    <div style="margin-top:28px;"><div class="lbl">Usage Map — hover any row</div>
+      <div>
+        <div class="u-row"><div class="u-ic"><ph-plant color="var(--icon-color)" weight="duotone" size="22"></ph-plant></div><div class="u-inf"><div class="u-nm">ParentWise First Steps</div><div class="u-dsc">Growth, entry point. Pairs with gold "Free" badge.</div></div><div class="u-code">ph-plant</div></div>
+        <div class="u-row"><div class="u-ic"><ph-globe-hemisphere-west color="var(--icon-color)" weight="duotone" size="22"></ph-globe-hemisphere-west></div><div class="u-inf"><div class="u-nm">Circle of Secure Parents</div><div class="u-dsc">Worldwide community. Featured card + "Most Popular" badge.</div></div><div class="u-code">ph-globe-hemisphere-west</div></div>
+        <div class="u-row"><div class="u-ic"><ph-compass color="var(--icon-color)" weight="duotone" size="22"></ph-compass></div><div class="u-inf"><div class="u-nm">ParentWise Pathway</div><div class="u-dsc">90-day flagship. Direction, navigation, intentional journey.</div></div><div class="u-code">ph-compass</div></div>
+        <div class="u-row"><div class="u-ic"><ph-flower-lotus color="var(--icon-color)" weight="duotone" size="22"></ph-flower-lotus></div><div class="u-inf"><div class="u-nm">Brand Mark / Favicon</div><div class="u-dsc">Purple on light · Gold on dark. Never swap.</div></div><div class="u-code">ph-flower-lotus</div></div>
+        <div class="u-row"><div class="u-ic"><ph-brain color="var(--icon-color)" weight="duotone" size="22"></ph-brain></div><div class="u-inf"><div class="u-nm">Attachment Theory</div><div class="u-dsc">Look Back phase, Inside Out Audit, pattern recognition.</div></div><div class="u-code">ph-brain</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;"><div class="lbl">Size Reference — ph-compass</div>
+      <div class="sz-row">
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="16"></ph-compass><div class="sz-lbl">16px</div></div>
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="20"></ph-compass><div class="sz-lbl">20px</div></div>
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="24"></ph-compass><div class="sz-lbl">24px</div></div>
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="32"></ph-compass><div class="sz-lbl">32px</div></div>
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="40"></ph-compass><div class="sz-lbl">40px</div></div>
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="48"></ph-compass><div class="sz-lbl">48px</div></div>
+        <div class="sz-item"><ph-compass color="var(--icon-color)" weight="duotone" size="64"></ph-compass><div class="sz-lbl">64px</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CH 6 — CODE ══════════ -->
+  <div class="ch"><div class="ch-n">6</div><div class="ch-t">Code Reference — Tokens, Interactions, Icons</div></div>
+
+  <div class="sec alt" id="code">
+    <div class="lbl">CSS Implementation</div>
+    <div class="code"><code><span class="c-cm">/* ── Gold button — all states ───────────────────────── */</span>
+.btn-gold { animation: goldPulse <span class="c-v">3s</span> ∞, floatY <span class="c-v">4s</span> ∞; cursor: pointer; }
+.btn-gold:hover  { transform: translateY(-3px) scale(1.01);
+                   box-shadow: 0 12px 40px rgba(201,169,110,<span class="c-v">.65</span>);
+                   animation-play-state: paused; filter: brightness(1.06); }
+.btn-gold:active { transform: translateY(0) scale(.98);
+                   box-shadow: 0 3px 12px rgba(201,169,110,<span class="c-v">.4</span>); }
+.btn-gold:focus-visible { outline: 2px solid var(<span class="c-g">--gold-mid</span>); outline-offset: 3px; }
+
+<span class="c-cm">/* ── Purple button ──────────────────────────────────── */</span>
+.btn-purple:hover  { background: var(<span class="c-g">--btn-pur-hbg</span>); transform: translateY(-2px); }
+.btn-purple:active { background: var(<span class="c-g">--purple-deep</span>); transform: translateY(1px); }
+
+<span class="c-cm">/* ── Outline button ─────────────────────────────────── */</span>
+.btn-ol:hover { background: var(<span class="c-g">--btn-ol-hbg</span>); border-color: var(<span class="c-g">--btn-ol-hbd</span>);
+                color: var(<span class="c-g">--tx-primary</span>); transform: translateY(-2px); }
+
+<span class="c-cm">/* ── Badges ─────────────────────────────────────────── */</span>
+.badge       { cursor: default; transition: filter .15s, transform .15s; }
+.b-gold:hover  { filter: brightness(1.08); transform: translateY(-1px); }
+.b-sci:hover   { background: var(<span class="c-g">--badge-sci-hbg</span>); transform: translateY(-1px); }
+.b-ol:hover    { background: var(<span class="c-g">--badge-ol-hbg</span>); border-color: var(<span class="c-g">--tx-muted</span>); }
+
+<span class="c-cm">/* ── Cards ──────────────────────────────────────────── */</span>
+.card:hover      { transform: translateY(-4px); border-color: var(<span class="c-g">--bd-gold</span>); }
+.card.feat:hover { box-shadow: 0 14px 40px rgba(212,185,126,<span class="c-v">.25</span>); }
+.cbtn-gold:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.cbtn-ol:hover   { background: var(<span class="c-g">--cbtn-ol-hbg</span>); color: var(<span class="c-g">--cbtn-ol-htx</span>); }
+
+<span class="c-cm">/* ── Icon color rule ────────────────────────────────── */</span>
+[data-mode="dark"]  --icon-color: <span class="c-g">#D4B97E</span>;  <span class="c-cm">/* gold on dark  */</span>
+[data-mode="light"] --icon-color: <span class="c-g">#6B4CA3</span>;  <span class="c-cm">/* purple on light */</span>
+<span class="c-hl">&lt;ph-compass</span> color=<span class="c-v">"var(--icon-color)"</span> weight=<span class="c-v">"duotone"</span> size=<span class="c-v">"32"</span><span class="c-hl">&gt;&lt;/ph-compass&gt;</span></code></div>
+  </div>
+
+  <!-- PRINCIPLES -->
+  <div class="sec">
+    <div class="lbl">Design Principles</div>
+    <div class="tiles-3">
+      <div class="tile"><div class="tile-n">01</div><div class="tile-t">Contrast first</div><div class="tile-b">Every token verified for WCAG AA. Text minimum 4.5:1. Gold button text #1A1000 = 10.2:1 — always.</div></div>
+      <div class="tile"><div class="tile-n">02</div><div class="tile-t">Gold = primary CTA</div><div class="tile-b">The animated gold button is the highest-hierarchy CTA. One per section max. Its hover pauses the float.</div></div>
+      <div class="tile"><div class="tile-n">03</div><div class="tile-t">Hover = 3 properties</div><div class="tile-b">Every interactive element changes: position (translateY), border/shadow, and background or brightness.</div></div>
+      <div class="tile"><div class="tile-n">04</div><div class="tile-t">:active presses back</div><div class="tile-b">Active state always reverses the hover lift — translateY back to 0 or +1px. Communicates physical press.</div></div>
+      <div class="tile"><div class="tile-n">05</div><div class="tile-t">Focus = gold ring</div><div class="tile-b">2px solid var(--gold-mid) at 3px offset on every interactive element. Works in both modes.</div></div>
+      <div class="tile"><div class="tile-n">06</div><div class="tile-t">Icons follow bg</div><div class="tile-b">--icon-color is the single source of truth. Purple on light, gold on dark. One token, zero duplication.</div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="foot-t">Secure Parents Create Secure Teens.<br>Secure Teens Create a Secure Future.</div>
+    <div class="foot-m">ParentWise Brand Reference · v2.3<br>getparentwise.com · offers.marcushiggs.com<br>@phosphor-icons/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b4c3d1d6d7dbd9c4dbdad1dac0c7f4869a85">[email&#160;protected]</a> · DM Sans</div>
+  </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function toggleMode() {
+    const html = document.documentElement;
+    const dark = html.getAttribute('data-mode') === 'dark';
+    html.setAttribute('data-mode', dark ? 'light' : 'dark');
+    document.getElementById('t-ic').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('t-lb').textContent  = dark ? 'Light' : 'Dark';
+  }
+
+  // Scroll fade-in
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.sec, .ch').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
