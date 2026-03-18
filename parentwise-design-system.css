@@ -1,0 +1,1594 @@
+/*
+ * ╔══════════════════════════════════════════════════════════════════════╗
+ * ║          PARENTWISE — ONE TRUE DESIGN SYSTEM · v2.3                 ║
+ * ║          getparentwise.com · offers.marcushiggs.com                 ║
+ * ║          "Secure Parents. Secure Teens. Secure Future."             ║
+ * ╚══════════════════════════════════════════════════════════════════════╝
+ *
+ * HOW TO USE THIS FILE
+ * ────────────────────
+ * 1. Link this stylesheet in <head>:
+ *      <link rel="stylesheet" href="parentwise-design-system.css" />
+ *
+ * 2. Link the companion script before </body>:
+ *      <script src="parentwise-design-system.js"></script>
+ *
+ * 3. Load the required fonts (copy into <head>):
+ *      <link rel="preconnect" href="https://fonts.googleapis.com" />
+ *      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ *      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
+ *
+ * 4. Load the icon library before </body>:
+ *      <script type="module" src="https://unpkg.com/@phosphor-icons/webcomponents@2.1"></script>
+ *
+ * 5. Set the initial mode on <html>:
+ *      <html lang="en" data-mode="dark">   ← or "light"
+ *
+ * 6. To enable dark/light toggle, add this button anywhere:
+ *      <div class="tw" onclick="toggleMode()">
+ *        <span id="t-ic">🌙</span>
+ *        <div class="tw-track"><div class="tw-dot"></div></div>
+ *        <span class="tw-lbl" id="t-lb">Dark</span>
+ *      </div>
+ *
+ * COMPONENTS INCLUDED
+ * ────────────────────
+ *  Buttons  : .btn-gold  .btn-purple  .btn-ol  .btn-gol
+ *  Badges   : .badge + .b-gold  .b-sci  .b-ph  .b-ol  .b-gol
+ *  Cards    : .card  .card.feat  .cbtn-gold  .cbtn-ol
+ *  Nav      : .nav  .nav a
+ *  Hero     : .hero  .hero-in  .hero-tag  .hero-title  .hero-sub  .orb
+ *  Chapter  : .ch  .ch-n  .ch-t
+ *  Sections : .sec  .sec.alt  .lbl
+ *  Layout   : .page  .cards-row  .tiles-2  .tiles-3  .icon-grid
+ *  Typography: .t-disp  .t-h1  .t-serif  .t-body  .t-glbl  .t-cap  .pq
+ *  Misc     : .tw (mode toggle)  .foot  .code  .tile  .icard
+ *
+ * ════════════════════════════════════════════════════════════════════════
+ */
+
+/* ────────────────────────────────────────────────────────────────────────
+   0.  RESET
+   ──────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   1.  FIXED TOKENS — identical in dark AND light mode
+       These never change regardless of [data-mode].
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Purple family ── */
+  --purple-deep:    #5A3D8F;   /* primary brand · headers */
+  --purple-brand:   #6B4CA3;   /* CTAs · icons on light */
+  --purple-hero1:   #7B5AB5;   /* gradient start */
+  --purple-hero2:   #3D2970;   /* gradient end */
+
+  /* ── Gold family ── */
+  --gold-bright:    #D4B97E;   /* gold button start · icons on dark */
+  --gold-mid:       #C9A96E;   /* labels · text on dark · focus ring */
+  --gold-deep:      #B8943A;   /* gold button end · text on light */
+  --gold-darker:    #8B6419;   /* darkest gold accent */
+  --on-gold:        #1A0E00;   /* text ON gold gradient — 10.2:1 — NEVER changes */
+
+  /* ── Neutral palette ── */
+  --warm-cream:     #F5F1E8;   /* page bg (light) */
+  --canvas:         #C9C3B4;   /* outer page surround (both modes) */
+  --near-black:     #1A1A2E;   /* page bg (dark) */
+  --ghost-lavender: #F0EAF8;   /* primary text (dark) */
+  --lavender-tint:  #EDE8F5;   /* icon bg · hover (light) */
+
+  /* ── Gradients ── */
+  --grad-hero:      linear-gradient(155deg, #7B5AB5 0%, #5A3D8F 45%, #3D2970 100%);
+  --grad-gold:      linear-gradient(135deg, #D4B97E 0%, #B8943A 100%);
+  --grad-chapter:   linear-gradient(90deg,  #5A3D8F 0%, #6B4CA3 100%);
+  --grad-dark-sec:  linear-gradient(180deg, #1A1A2E 0%, #0F0820 100%);
+  --grad-dark-card: linear-gradient(135deg, #2A1950 0%, #1A1035 100%);
+
+  /* ── Spacing scale (base unit: 4px) ── */
+  --sp-1:  4px;    /* tight  — icon padding, inline gaps */
+  --sp-2:  8px;    /* compact — badge padding, small gaps */
+  --sp-3: 16px;    /* base   — component padding */
+  --sp-4: 24px;    /* section — card padding, list rhythm */
+  --sp-5: 40px;    /* open   — between major sections */
+  --sp-6: 64px;    /* hero   — top / bottom padding */
+
+  /* ── Border radius scale ── */
+  --radius-badge:     6px;
+  --radius-btn:       8px;
+  --radius-card:      12px;
+  --radius-container: 16px;
+  /* hero wave: border-radius: 50% 50% 0 0 / 100% 100% 0 0 */
+
+  /* ── Layout ── */
+  --page-max: 900px;
+
+  /* ── Transition speeds ── */
+  --transition-color:  background-color .35s ease, border-color .28s ease, color .28s ease, box-shadow .28s ease;
+  --transition-fast:   transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  --transition-badge:  filter .15s ease, transform .15s ease, background-color .15s ease, border-color .15s ease;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2.  DARK MODE TOKENS  [data-mode="dark"]
+   ════════════════════════════════════════════════════════════════════════ */
+[data-mode="dark"] {
+  /* ── Backgrounds ── */
+  --bg-page:        #1A1A2E;
+  --bg-alt:         #120D24;
+  --bg-card:        #211545;
+  --bg-card-feat:   #2A1A52;
+  --bg-inset:       #0E0919;
+  --bg-overlay:     rgba(107,76,163,.2);
+  --footer-bg:      #08040F;
+
+  /* ── Text ── */
+  --tx-primary:     #F0EAF8;   /* 14.8:1 on bg-page */
+  --tx-secondary:   #C8BAE0;   /* 8.1:1 */
+  --tx-muted:       #9C8BB8;   /* 4.6:1 */
+  --tx-label:       #C9A96E;
+  --tx-serif:       #D4B97E;
+  --tx-code:        #C5B3E0;
+
+  /* ── Borders ── */
+  --bd-default:     rgba(255,255,255,.1);
+  --bd-strong:      rgba(255,255,255,.22);
+  --bd-gold:        rgba(212,185,126,.5);
+  --bd-purple:      rgba(107,76,163,.55);
+
+  /* ── Icons ── */
+  --icon-color:     #D4B97E;   /* gold on dark */
+  --icon-bg:        rgba(212,185,126,.12);
+
+  /* ── Badges ── */
+  --badge-sci-bg:   #2D1E50;
+  --badge-sci-tx:   #C8B4F0;   /* 5.2:1 */
+  --badge-ph-bg:    #1D1338;
+  --badge-ph-tx:    #B8A8D8;   /* 5.0:1 */
+  --badge-ol-tx:    #A897C8;   /* 4.5:1 */
+  --badge-ol-bd:    #7A6A98;
+  --badge-sci-hbg:  #3A2860;
+  --badge-ph-hbg:   #261848;
+  --badge-ol-hbg:   rgba(255,255,255,.06);
+  --badge-gol-hbg:  rgba(212,185,126,.12);
+
+  /* ── Buttons ── */
+  --btn-pur-bg:     #6B4CA3;
+  --btn-pur-hbg:    #7D5AB8;   /* lighter purple on hover */
+  --btn-pur-tx:     #FFFFFF;
+  --btn-ol-tx:      #C8BAE0;
+  --btn-ol-bd:      rgba(200,186,224,.4);
+  --btn-ol-hbg:     rgba(255,255,255,.07);
+  --btn-ol-hbd:     rgba(200,186,224,.7);
+  --btn-gol-tx:     #D4B97E;
+  --btn-gol-bd:     #C9A96E;
+  --btn-gol-hbg:    rgba(212,185,126,.1);
+  --btn-gol-hbd:    #D4B97E;
+
+  /* ── Cards ── */
+  --card-name:      #F0EAF8;
+  --card-price:     #D4B97E;
+  --card-sub:       #9C8BB8;
+  --card-desc:      #C8BAE0;
+  --cbtn-ol-tx:     #C8BAE0;
+  --cbtn-ol-bd:     rgba(200,186,224,.3);
+  --cbtn-ol-htx:    #F0EAF8;
+  --cbtn-ol-hbd:    rgba(200,186,224,.6);
+  --cbtn-ol-hbg:    rgba(255,255,255,.06);
+
+  /* ── Pull quote ── */
+  --pullquote-bg:   rgba(107,76,163,.18);
+  --pq-border:      #C9A96E;
+
+  /* ── Tiles / info blocks ── */
+  --tile-bg:        #1D1338;
+  --tile-bd:        rgba(255,255,255,.09);
+  --tile-tx1:       #F0EAF8;
+  --tile-tx2:       #9C8BB8;
+  --tile-htx:       #C9A96E;   /* var(--gold-mid) */
+
+  /* ── Swatches ── */
+  --swatch-bg:      #1D1338;
+  --swatch-nm:      #F0EAF8;
+  --swatch-hx:      #C9A96E;
+  --swatch-rl:      #9C8BB8;
+
+  /* ── Gradient info blocks ── */
+  --grad-info-bg:   #1D1338;
+  --grad-nm:        #F0EAF8;
+  --grad-vl:        #9C8BB8;
+
+  /* ── Spacing bar ── */
+  --sp-bar:         linear-gradient(135deg, #D4B97E 0%, #B8943A 100%);
+
+  /* ── Radius demo ── */
+  --radius-bg:      rgba(212,185,126,.1);
+  --radius-bd:      rgba(212,185,126,.45);
+
+  /* ── Hero wave fill ── */
+  --hero-wave:      #1A1A2E;
+
+  /* ── Navigation ── */
+  --nav-bg:         #0F0820;
+  --nav-pill-bg:    rgba(255,255,255,.07);
+  --nav-pill-tx:    rgba(255,255,255,.6);
+  --nav-hbg:        rgba(212,185,126,.16);
+  --nav-htx:        #D4B97E;
+
+  /* ── Label rule line ── */
+  --lbl-line:       linear-gradient(90deg, rgba(201,169,110,.4) 0%, transparent 100%);
+
+  /* ── Code block ── */
+  --code-bg:        #0A0615;
+
+  /* ── Usage rows ── */
+  --usage-nm:       #F0EAF8;
+  --usage-cbg:      rgba(212,185,126,.1);
+  --usage-ctx:      #C9A96E;
+
+  /* ── Curve demo footer ── */
+  --curve-ft-bg:    #1D1338;
+  --curve-ft-tx:    #9C8BB8;
+
+  /* ── Mode toggle ── */
+  --tw-bg:          #211545;
+  --tw-bd:          rgba(255,255,255,.15);
+  --tw-track:       #2D1A50;
+  --tw-dot:         #D4B97E;
+  --tw-lbl:         #C8BAE0;
+
+  /* ── Footer typography ── */
+  --ft-tag:         rgba(212,185,126,.75);
+  --ft-meta:        rgba(255,255,255,.3);
+
+  /* ── Hover state annotation colors ── */
+  --hs-bg:          #1D1338;
+  --hs-bd:          rgba(255,255,255,.09);
+  --hs-before:      rgba(255,255,255,.04);
+  --hs-label-tx:    #9C8BB8;
+  --hs-val-tx:      #D4B97E;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3.  LIGHT MODE TOKENS  [data-mode="light"]
+   ════════════════════════════════════════════════════════════════════════ */
+[data-mode="light"] {
+  /* ── Backgrounds ── */
+  --bg-page:        #F5F1E8;
+  --bg-alt:         #FFFFFF;
+  --bg-card:        #FFFFFF;
+  --bg-card-feat:   #FDFAFF;
+  --bg-inset:       #F0ECF8;
+  --bg-overlay:     rgba(107,76,163,.06);
+  --footer-bg:      #5A3D8F;   /* always deep plum on light */
+
+  /* ── Text ── */
+  --tx-primary:     #1A1A2E;   /* 16.1:1 on bg-page */
+  --tx-secondary:   #3D2E5A;   /* 9.4:1 */
+  --tx-muted:       #6B5E82;   /* 4.6:1 */
+  --tx-label:       #7A5C1A;   /* 4.5:1 on cream */
+  --tx-serif:       #5A3D8F;
+  --tx-code:        #C5B3E0;
+
+  /* ── Borders ── */
+  --bd-default:     #DDD8EC;
+  --bd-strong:      #C5B7D0;
+  --bd-gold:        rgba(184,148,58,.5);
+  --bd-purple:      rgba(107,76,163,.35);
+
+  /* ── Icons ── */
+  --icon-color:     #6B4CA3;   /* purple on light */
+  --icon-bg:        #EDE8F5;
+
+  /* ── Badges ── */
+  --badge-sci-bg:   #EDE8F5;
+  --badge-sci-tx:   #3D2070;   /* 7.1:1 */
+  --badge-ph-bg:    #F0ECF8;
+  --badge-ph-tx:    #3D2070;   /* 7.1:1 */
+  --badge-ol-tx:    #5A3D8F;   /* 5.8:1 */
+  --badge-ol-bd:    #9C8BB8;
+  --badge-sci-hbg:  #DDD5F5;
+  --badge-ph-hbg:   #E4DFF5;
+  --badge-ol-hbg:   rgba(90,61,143,.06);
+  --badge-gol-hbg:  rgba(184,148,58,.08);
+
+  /* ── Buttons ── */
+  --btn-pur-bg:     #5A3D8F;
+  --btn-pur-hbg:    #6B4CA3;
+  --btn-pur-tx:     #FFFFFF;
+  --btn-ol-tx:      #3D2E5A;
+  --btn-ol-bd:      #9C8BB8;
+  --btn-ol-hbg:     rgba(61,46,90,.05);
+  --btn-ol-hbd:     #5A3D8F;
+  --btn-gol-tx:     #7A5C1A;
+  --btn-gol-bd:     #B8943A;
+  --btn-gol-hbg:    rgba(184,148,58,.08);
+  --btn-gol-hbd:    #8B6419;
+
+  /* ── Cards ── */
+  --card-name:      #1A1A2E;
+  --card-price:     #7A5C1A;   /* 4.8:1 on white */
+  --card-sub:       #6B5E82;
+  --card-desc:      #3D2E5A;
+  --cbtn-ol-tx:     #5A3D8F;
+  --cbtn-ol-bd:     #C5B7D0;
+  --cbtn-ol-htx:    #3D2070;
+  --cbtn-ol-hbd:    #9C8BB8;
+  --cbtn-ol-hbg:    rgba(90,61,143,.04);
+
+  /* ── Pull quote ── */
+  --pullquote-bg:   rgba(107,76,163,.07);
+  --pq-border:      #B8943A;
+
+  /* ── Tiles / info blocks ── */
+  --tile-bg:        #F8F5FF;
+  --tile-bd:        #DDD8EC;
+  --tile-tx1:       #1A1A2E;
+  --tile-tx2:       #6B5E82;
+  --tile-htx:       #6B4CA3;   /* var(--purple-brand) */
+
+  /* ── Swatches ── */
+  --swatch-bg:      #FFFFFF;
+  --swatch-nm:      #1A1A2E;
+  --swatch-hx:      #5A3D8F;
+  --swatch-rl:      #6B5E82;
+
+  /* ── Gradient info blocks ── */
+  --grad-info-bg:   #F8F5FF;
+  --grad-nm:        #1A1A2E;
+  --grad-vl:        #6B5E82;
+
+  /* ── Spacing bar ── */
+  --sp-bar:         linear-gradient(135deg, #B8943A 0%, #8B6419 100%);
+
+  /* ── Radius demo ── */
+  --radius-bg:      #EDE8F5;
+  --radius-bd:      rgba(184,148,58,.5);
+
+  /* ── Hero wave fill ── */
+  --hero-wave:      #F5F1E8;
+
+  /* ── Navigation ── */
+  --nav-bg:         #5A3D8F;
+  --nav-pill-bg:    rgba(255,255,255,.12);
+  --nav-pill-tx:    rgba(255,255,255,.72);
+  --nav-hbg:        rgba(255,255,255,.22);
+  --nav-htx:        #FFFFFF;
+
+  /* ── Label rule line ── */
+  --lbl-line:       linear-gradient(90deg, rgba(122,92,26,.35) 0%, transparent 100%);
+
+  /* ── Code block ── */
+  --code-bg:        #1A1A2E;
+
+  /* ── Usage rows ── */
+  --usage-nm:       #1A1A2E;
+  --usage-cbg:      #EDE8F5;
+  --usage-ctx:      #5A3D8F;
+
+  /* ── Curve demo footer ── */
+  --curve-ft-bg:    #F0ECF8;
+  --curve-ft-tx:    #6B5E82;
+
+  /* ── Mode toggle ── */
+  --tw-bg:          #EDE8F5;
+  --tw-bd:          #C5B7D0;
+  --tw-track:       #C5B7D0;
+  --tw-dot:         #5A3D8F;
+  --tw-lbl:         #3D2E5A;
+
+  /* ── Footer typography ── */
+  --ft-tag:         rgba(255,255,255,.88);
+  --ft-meta:        rgba(255,255,255,.55);
+
+  /* ── Hover state annotation colors ── */
+  --hs-bg:          #F8F5FF;
+  --hs-bd:          #DDD8EC;
+  --hs-before:      rgba(90,61,143,.04);
+  --hs-label-tx:    #6B5E82;
+  --hs-val-tx:      #5A3D8F;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   4.  ANIMATIONS & KEYFRAMES
+       ALL visual motion used on the page lives here.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── Shimmer — the shine sweep across gold buttons ── */
+@keyframes shimmer {
+  0%   { left: -80%; }
+  100% { left: 130%; }
+}
+
+/* ── Gold pulse — glow oscillation on btn-gold ── */
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(201,169,110,.45); }
+  50%       { box-shadow: 0 8px 36px rgba(201,169,110,.65), 0 0 0 5px rgba(201,169,110,.08); }
+}
+
+/* ── Float Y — gentle vertical float on btn-gold ── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+/* ── Orb drift — animated hero background orbs ── */
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(20px, -15px); }
+}
+
+/* ── Fade up — scroll-triggered reveal animation ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Page entrance ── */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Fade-up class used by JS IntersectionObserver ── */
+.pw-fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.pw-fade-up.pw-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5.  BASE STYLES
+   ════════════════════════════════════════════════════════════════════════ */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--canvas);
+  color: var(--tx-primary);
+  min-height: 100vh;
+  padding: 48px 20px 80px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth mode transitions on everything except layout / transform */
+body, .page * {
+  transition: var(--transition-color);
+}
+
+/* Prevent transition conflicts on animated/interactive elements */
+.btn-gold,
+.btn-gold::before,
+.cbtn-gold,
+.cbtn-gold::before {
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+}
+
+/* ── .page wrapper ── */
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  box-shadow: 0 20px 80px rgba(0,0,0,.25), 0 4px 20px rgba(0,0,0,.12);
+  border-radius: 0 0 var(--radius-container) var(--radius-container);
+  overflow: hidden;
+  animation: pageIn .6s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   6.  MODE TOGGLE — .tw
+   ════════════════════════════════════════════════════════════════════════ */
+.tw {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--tw-bg);
+  border: 1px solid var(--tw-bd);
+  border-radius: 30px;
+  padding: 7px 14px 7px 10px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,.22);
+}
+.tw:hover { border-color: var(--gold-mid); }
+
+.tw-track {
+  width: 36px;
+  height: 20px;
+  background: var(--tw-track);
+  border-radius: 10px;
+  position: relative;
+  flex-shrink: 0;
+}
+.tw-dot {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--tw-dot);
+  border-radius: 50%;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1) !important;
+}
+/* Dot slides right in light mode */
+[data-mode="light"] .tw-dot { transform: translateX(16px); }
+
+.tw-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--tw-lbl);
+}
+
+/* ── Download button (companion to mode toggle) ── */
+.dl-wrap { position: relative; }
+.dl-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--tw-bg);
+  border: 1px solid var(--tw-bd);
+  border-radius: 30px;
+  padding: 7px 14px 7px 12px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,.22);
+  color: var(--tw-lbl);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-family: 'DM Sans', sans-serif;
+}
+.dl-btn:hover { border-color: var(--gold-mid); }
+.dl-drop {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--tw-bg);
+  border: 1px solid var(--tw-bd);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+  min-width: 162px;
+  z-index: 300;
+}
+.dl-drop.open { display: flex; flex-direction: column; gap: 2px; }
+.dl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tw-lbl);
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+}
+.dl-item:hover { background: var(--nav-hbg); color: var(--gold-mid); }
+
+/* Fixed top-right controls wrapper */
+.top-controls {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   7.  HERO SECTION — always uses gradient (brand signature)
+   ════════════════════════════════════════════════════════════════════════ */
+.hero {
+  background: var(--grad-hero);
+  position: relative;
+  padding: 44px 52px 110px;
+  overflow: hidden;
+}
+
+/* ── Layered radial overlays — depth and texture ── */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 20%,  rgba(255,255,255,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 85% 80%,  rgba(15,8,32,.5)      0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 60% 40%,  rgba(212,185,126,.08) 0%, transparent 55%);
+}
+
+/* ── Hero wave — bottom curved edge (brand signature shape) ── */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: -5%;
+  width: 110%;
+  height: 90px;
+  background: var(--hero-wave);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.hero-in {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+}
+
+/* ── Hero eyebrow tag pill ── */
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+  margin-bottom: 20px;
+}
+
+/* ── Hero headline — responsive fluid size ── */
+.hero-title {
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -.025em;
+  margin-bottom: 10px;
+}
+
+/* ── Hero sub (Cormorant Garamond — emotion only) ── */
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(255,255,255,.68);
+  margin-bottom: 28px;
+  line-height: 1.45;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.hero-ver {
+  font-size: 11px;
+  color: rgba(255,255,255,.38);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ── Animated background orbs ── */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbDrift 8s ease-in-out infinite;
+}
+.orb-1 {
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(123,90,181,.28) 0%, transparent 70%);
+  top: -80px; right: 60px;
+}
+.orb-2 {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(212,185,126,.1) 0%, transparent 70%);
+  bottom: 60px; right: 100px;
+  animation-delay: -3s;   /* stagger for natural feel */
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   8.  NAVIGATION PILLS
+   ════════════════════════════════════════════════════════════════════════ */
+.nav {
+  background: var(--nav-bg);
+  padding: 12px 52px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.nav a {
+  background: var(--nav-pill-bg);
+  color: var(--nav-pill-tx);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease !important;
+}
+.nav a:hover {
+  background: var(--nav-hbg);
+  color: var(--nav-htx);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   9.  CHAPTER BARS — numbered gradient headers
+   ════════════════════════════════════════════════════════════════════════ */
+.ch {
+  background: var(--grad-chapter);
+  padding: 14px 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.ch-n {
+  width: 24px; height: 24px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.ch-t {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,.92);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   10. SECTIONS — alternating bg
+   ════════════════════════════════════════════════════════════════════════ */
+.sec {
+  background: var(--bg-page);
+  padding: 38px 52px;
+  border-bottom: 1px solid var(--bd-default);
+}
+.sec.alt { background: var(--bg-alt); }
+.sec:last-of-type { border-bottom: none; }
+
+.sec-hdr {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sec-note {
+  font-size: 11px;
+  color: var(--tx-muted);
+  font-style: italic;
+}
+
+/* ── Section label with gold rule line ── */
+.lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--tx-label);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lbl::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--lbl-line);
+}
+
+/* Component row wrapper */
+.comp-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.comp-row:last-child { margin-bottom: 0; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   11. BUTTONS
+       Rule: Gold = highest hierarchy CTA (one per section max).
+             Every button: 3 property hover + active press-back + gold focus ring.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── GOLD BUTTON (Primary CTA) ─────────────────────────────────────────
+   Visual signature: animated float + pulse glow + shimmer sweep.
+   Hover pauses the float so the element feels responsive.
+   ──────────────────────────────────────────────────────────────────── */
+.btn-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--grad-gold);
+  color: var(--on-gold);              /* #1A0E00 — 10.2:1 contrast */
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 13px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(201,169,110,.45);
+  animation: goldPulse 3s ease-in-out infinite, floatY 4s ease-in-out infinite;
+}
+
+/* Shimmer sweep — white skewed stripe scrolling left→right */
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -80%;
+  width: 50%;
+  height: 140%;
+  background: rgba(255,255,255,.2);
+  transform: skewX(-20deg);
+  animation: shimmer 2.8s ease-in-out infinite;
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(201,169,110,.65);
+  animation-play-state: paused;       /* stops float + pulse on hover */
+  filter: brightness(1.06);
+}
+.btn-gold:active {
+  transform: translateY(0px) scale(.98);
+  box-shadow: 0 3px 12px rgba(201,169,110,.4);
+  animation-play-state: paused;
+}
+.btn-gold:focus-visible {
+  outline: 2px solid var(--gold-mid);
+  outline-offset: 3px;
+}
+
+/* ── PURPLE BUTTON (Secondary CTA) ─────────────────────────────────── */
+.btn-purple {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--btn-pur-bg);
+  color: var(--btn-pur-tx);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 13px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(107,76,163,.3);
+  transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+}
+.btn-purple:hover {
+  background: var(--btn-pur-hbg);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(107,76,163,.45);
+}
+.btn-purple:active {
+  background: var(--purple-deep);
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(107,76,163,.3);
+}
+.btn-purple:focus-visible {
+  outline: 2px solid var(--gold-mid);
+  outline-offset: 3px;
+}
+
+/* ── OUTLINE BUTTON (Tertiary) ──────────────────────────────────────── */
+.btn-ol {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--btn-ol-tx);
+  border: 1.5px solid var(--btn-ol-bd);
+  border-radius: var(--radius-btn);
+  padding: 12px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease !important;
+}
+.btn-ol:hover {
+  background: var(--btn-ol-hbg);
+  border-color: var(--btn-ol-hbd);
+  color: var(--tx-primary);
+  transform: translateY(-2px);
+}
+.btn-ol:active { transform: translateY(1px); }
+.btn-ol:focus-visible {
+  outline: 2px solid var(--gold-mid);
+  outline-offset: 3px;
+}
+
+/* ── GOLD OUTLINE BUTTON ────────────────────────────────────────────── */
+.btn-gol {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--btn-gol-tx);
+  border: 1.5px solid var(--btn-gol-bd);
+  border-radius: var(--radius-btn);
+  padding: 12px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease !important;
+}
+.btn-gol:hover {
+  background: var(--btn-gol-hbg);
+  border-color: var(--btn-gol-hbd);
+  transform: translateY(-2px);
+}
+.btn-gol:active { transform: translateY(1px); }
+.btn-gol:focus-visible {
+  outline: 2px solid var(--gold-mid);
+  outline-offset: 3px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   12. BADGES
+       Rule: Hover lifts + brightens / deepens. Active returns to 0.
+   ════════════════════════════════════════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-badge);
+  padding: 5px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: default;
+  transition: var(--transition-badge) !important;
+}
+
+/* Gold fill — always highest contrast */
+.b-gold {
+  background: var(--grad-gold);
+  color: var(--on-gold);
+}
+.b-gold:hover  { filter: brightness(1.08); transform: translateY(-1px); }
+.b-gold:active { transform: translateY(0);  filter: brightness(.96); }
+
+/* Science / purple tint */
+.b-sci {
+  background: var(--badge-sci-bg);
+  color: var(--badge-sci-tx);
+}
+.b-sci:hover  { background: var(--badge-sci-hbg); transform: translateY(-1px); }
+.b-sci:active { transform: translateY(0); }
+
+/* Phase */
+.b-ph {
+  background: var(--badge-ph-bg);
+  color: var(--badge-ph-tx);
+}
+.b-ph:hover  { background: var(--badge-ph-hbg); transform: translateY(-1px); }
+.b-ph:active { transform: translateY(0); }
+
+/* Outline */
+.b-ol {
+  background: transparent;
+  color: var(--badge-ol-tx);
+  border: 1.5px solid var(--badge-ol-bd);
+}
+.b-ol:hover  { background: var(--badge-ol-hbg); border-color: var(--tx-muted); transform: translateY(-1px); }
+.b-ol:active { transform: translateY(0); }
+
+/* Gold outline */
+.b-gol {
+  background: transparent;
+  color: var(--btn-gol-tx);
+  border: 1.5px solid var(--btn-gol-bd);
+}
+.b-gol:hover  { background: var(--badge-gol-hbg); border-color: var(--gold-mid); transform: translateY(-1px); }
+.b-gol:active { transform: translateY(0); }
+
+/* ════════════════════════════════════════════════════════════════════════
+   13. OFFER CARDS
+       3-column grid. Featured card has gold border. Hover = lift + gold glow.
+   ════════════════════════════════════════════════════════════════════════ */
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--bd-default);
+  border-radius: var(--radius-card);
+  padding: 22px 20px 20px;
+  cursor: pointer;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background-color .28s ease !important;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bd-gold);
+  box-shadow: 0 14px 40px rgba(0,0,0,.16);
+}
+.card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.1);
+}
+[data-mode="dark"]  .card:hover { box-shadow: 0 14px 40px rgba(0,0,0,.45); }
+
+/* Featured card — gold border always visible */
+.card.feat {
+  border: 1.5px solid var(--bd-gold);
+  background: var(--bg-card-feat);
+}
+.card.feat:hover {
+  box-shadow: 0 14px 40px rgba(212,185,126,.18);
+}
+[data-mode="dark"] .card.feat:hover {
+  box-shadow: 0 14px 40px rgba(212,185,126,.3);
+}
+
+/* Card internals */
+.card-icon {
+  width: 42px; height: 42px;
+  background: var(--icon-bg);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.card-bdg  { margin-bottom: 10px; min-height: 24px; }
+.card-nm   { font-size: 14px; font-weight: 700;  color: var(--card-name);  margin-bottom: 4px; }
+.card-pr   { font-size: 20px; font-weight: 700;  color: var(--card-price); margin-bottom: 4px; line-height: 1; }
+.card-sub  { font-size: 11px;                    color: var(--card-sub);   margin-bottom: 10px; }
+.card-dsc  { font-size: 12px;                    color: var(--card-desc);  line-height: 1.6; margin-bottom: 16px; }
+
+/* ── CARD BUTTON — Gold ─────────────────────────────────────────────── */
+.cbtn-gold {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: var(--grad-gold);
+  color: var(--on-gold);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(201,169,110,.3);
+}
+/* Shimmer sweep on card gold button */
+.cbtn-gold::before {
+  content: '';
+  position: absolute;
+  top: -20%; left: -80%;
+  width: 50%; height: 140%;
+  background: rgba(255,255,255,.2);
+  transform: skewX(-20deg);
+  animation: shimmer 3.2s ease-in-out infinite;
+}
+.cbtn-gold:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(201,169,110,.5);
+}
+.cbtn-gold:active { filter: brightness(.95); transform: translateY(0); }
+.cbtn-gold:focus-visible { outline: 2px solid var(--gold-mid); outline-offset: 3px; }
+
+/* ── CARD BUTTON — Outline ──────────────────────────────────────────── */
+.cbtn-ol {
+  display: block;
+  width: 100%;
+  padding: 9px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--cbtn-ol-tx);
+  border: 1.5px solid var(--cbtn-ol-bd);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .15s ease !important;
+}
+.cbtn-ol:hover {
+  background: var(--cbtn-ol-hbg);
+  border-color: var(--cbtn-ol-hbd);
+  color: var(--cbtn-ol-htx);
+  transform: translateY(-1px);
+}
+.cbtn-ol:active { transform: translateY(0); }
+.cbtn-ol:focus-visible { outline: 2px solid var(--gold-mid); outline-offset: 3px; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   14. TYPOGRAPHY
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Display — fluid hero-scale headline */
+.t-disp {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 700;
+  color: var(--tx-primary);
+  letter-spacing: -.025em;
+  line-height: 1.1;
+}
+.t-disp em {
+  color: var(--purple-brand);
+  font-style: normal;
+}
+
+/* H1 */
+.t-h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--tx-primary);
+  letter-spacing: -.02em;
+}
+
+/* Serif pull quote — Cormorant Garamond, emotional content only */
+.t-serif {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px;
+  font-style: italic;
+  color: var(--tx-serif);
+  line-height: 1.45;
+}
+
+/* Body text */
+.t-body {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--tx-secondary);
+  line-height: 1.8;
+}
+
+/* Gold label — all caps, tight tracking */
+.t-glbl {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tx-label);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* Caption */
+.t-cap {
+  font-size: 13px;
+  color: var(--tx-muted);
+  line-height: 1.55;
+}
+
+/* Type specimen blocks */
+.type-block {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--bd-default);
+}
+.type-block:last-child { border-bottom: none; }
+.type-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.type-lbl  { font-size: 10px; color: var(--tx-label); letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
+.type-spec { font-size: 10px; color: var(--tx-muted); font-style: italic; }
+
+/* Pull quote block */
+.pq {
+  background: var(--pullquote-bg);
+  border-left: 3px solid var(--pq-border);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+}
+.pq p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--tx-serif);
+  line-height: 1.5;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   15. COLOR SWATCHES
+   ════════════════════════════════════════════════════════════════════════ */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(126px, 1fr));
+  gap: 10px;
+}
+.sw {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--bd-default);
+  cursor: default;
+  transition: transform .15s ease, box-shadow .15s ease !important;
+}
+.sw:hover { transform: translateY(-2px); }
+[data-mode="dark"]  .sw:hover { box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+[data-mode="light"] .sw:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+.sw-c { height: 56px; }
+.sw-i { padding: 9px 12px; background: var(--swatch-bg); }
+.sw-n { font-size: 11px; font-weight: 700; color: var(--swatch-nm); margin-bottom: 2px; }
+.sw-h { font-size: 11px; font-weight: 600; color: var(--swatch-hx); }
+.sw-r { font-size: 10px; color: var(--swatch-rl); margin-top: 2px; line-height: 1.4; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   16. GRADIENT INFO BLOCKS
+   ════════════════════════════════════════════════════════════════════════ */
+.grad-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.gi {
+  flex: 1; min-width: 148px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--bd-default);
+}
+.gi-b { height: 62px; }
+.gi-i { padding: 10px 12px; background: var(--grad-info-bg); }
+.gi-n { font-size: 11px; font-weight: 700; color: var(--grad-nm); margin-bottom: 3px; }
+.gi-v { font-size: 9px; color: var(--grad-vl); line-height: 1.55; font-family: monospace; }
+
+/* Hero curve demo */
+.curve-demo { border-radius: 10px; overflow: hidden; border: 1px solid var(--bd-default); margin-top: 20px; }
+.curve-hero { background: var(--grad-hero); padding: 30px 28px 70px; position: relative; }
+.curve-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: -5%;
+  width: 110%; height: 60px;
+  background: var(--hero-wave);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+.curve-ft { background: var(--curve-ft-bg); padding: 13px 20px; }
+.curve-ft p { font-size: 11px; color: var(--curve-ft-tx); font-family: monospace; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   17. SPACING & RADIUS SYSTEM
+   ════════════════════════════════════════════════════════════════════════ */
+.sp-row { display: flex; align-items: center; gap: 14px; padding: 5px 0; }
+.sp-bar { height: 8px; border-radius: 2px; background: var(--sp-bar); opacity: .6; flex-shrink: 0; }
+.sp-tx  { font-size: 11px; color: var(--tx-muted); }
+
+.r-row  { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; margin-top: 20px; }
+.r-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.r-box  { background: var(--radius-bg); border: 1.5px solid var(--radius-bd); width: 64px; height: 42px; }
+.r-lbl  { font-size: 10px; color: var(--btn-gol-tx); font-weight: 600; text-align: center; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   18. TILE BLOCKS — motion tokens, design principles, code snippets
+   ════════════════════════════════════════════════════════════════════════ */
+.tiles-2 { display: grid; grid-template-columns: 1fr 1fr;         gap: 10px; }
+.tiles-3 { display: grid; grid-template-columns: repeat(3, 1fr);  gap: 10px; }
+
+.tile {
+  background: var(--tile-bg);
+  border: 1px solid var(--tile-bd);
+  border-radius: 10px;
+  padding: 16px 18px;
+  cursor: default;
+  transition: border-color .18s ease, background-color .18s ease, transform .18s ease !important;
+}
+.tile:hover { border-color: var(--bd-gold); transform: translateY(-2px); }
+[data-mode="dark"]  .tile:hover { background: var(--bg-card); }
+[data-mode="light"] .tile:hover { background: var(--bg-inset); }
+.tile-n    { font-size: 10px; font-weight: 700; color: var(--tx-label); letter-spacing: .1em; margin-bottom: 6px; }
+.tile-t    { font-size: 12px; font-weight: 700; color: var(--tile-tx1); margin-bottom: 5px; }
+.tile-b    { font-size: 11px;                   color: var(--tile-tx2); line-height: 1.55; }
+.tile-code { font-family: monospace; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   19. ICON SYSTEM — Phosphor duotone
+       --icon-color  =  gold (#D4B97E) on dark  /  purple (#6B4CA3) on light
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Icon grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(106px, 1fr));
+  gap: 10px;
+}
+.icard {
+  background: var(--tile-bg);
+  border: 1px solid var(--tile-bd);
+  border-radius: 10px;
+  padding: 16px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  cursor: default;
+  transition: border-color .15s ease, background-color .15s ease, transform .15s ease !important;
+}
+.icard:hover {
+  border-color: var(--bd-gold);
+  background: var(--icon-bg);
+  transform: translateY(-2px);
+}
+.ic-nm { font-size: 10px; font-weight: 600; color: var(--tx-muted); text-align: center; line-height: 1.4; word-break: break-word; }
+.ic-tg { font-size: 9px; color: var(--btn-gol-tx); opacity: .7; text-align: center; }
+
+/* Icon usage rows */
+.u-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--bd-default);
+  cursor: default;
+  border-radius: 8px;
+  transition: background-color .15s ease !important;
+}
+.u-row:last-child { border-bottom: none; }
+.u-row:hover { background: var(--bg-inset); padding-left: 8px; }
+.u-ic   { width: 44px; height: 44px; background: var(--icon-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.u-inf  { flex: 1; }
+.u-nm   { font-size: 13px; font-weight: 700; color: var(--usage-nm); margin-bottom: 2px; }
+.u-dsc  { font-size: 11px; color: var(--tx-muted); line-height: 1.45; }
+.u-code { font-family: monospace; font-size: 10px; color: var(--usage-ctx); background: var(--usage-cbg); border-radius: 4px; padding: 4px 10px; white-space: nowrap; font-weight: 600; }
+
+/* Icon sizes row */
+.sz-row  { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.sz-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sz-lbl  { font-size: 10px; color: var(--tx-muted); }
+
+/* ════════════════════════════════════════════════════════════════════════
+   20. INTERACTIVE STATES REFERENCE GRID
+       Visual documentation of hover / active / focus states.
+   ════════════════════════════════════════════════════════════════════════ */
+.states-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.state-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: start;
+  gap: 8px 14px;
+  padding: 12px 14px;
+  background: var(--hs-bg);
+  border: 1px solid var(--hs-bd);
+  border-radius: 10px;
+}
+.state-lbl {
+  font-size: 9px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--hs-label-tx);
+  text-align: right;
+  grid-row: span 2; align-self: center;
+}
+.state-val {
+  font-size: 10px; color: var(--hs-val-tx);
+  line-height: 1.6; font-family: monospace;
+  min-width: 0; word-break: break-word; overflow-wrap: anywhere;
+}
+
+/* ── Hover demo mockups (static, for reference) ── */
+.demo-hovered-gold {
+  background: var(--grad-gold); color: var(--on-gold);
+  border-radius: 6px; padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  box-shadow: 0 12px 40px rgba(201,169,110,.65);
+  transform: translateY(-3px) scale(1.01);
+  filter: brightness(1.06);
+  white-space: nowrap;
+}
+.demo-hovered-purple {
+  background: var(--btn-pur-hbg); color: #fff;
+  border-radius: 6px; padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  box-shadow: 0 8px 30px rgba(107,76,163,.45);
+  transform: translateY(-2px);
+  white-space: nowrap;
+}
+.demo-hovered-ol {
+  background: var(--btn-ol-hbg); color: var(--tx-primary);
+  border: 1.5px solid var(--btn-ol-hbd); border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  transform: translateY(-2px);
+  white-space: nowrap;
+}
+.demo-hovered-gol {
+  background: var(--btn-gol-hbg); color: var(--btn-gol-tx);
+  border: 1.5px solid var(--btn-gol-hbd); border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  transform: translateY(-2px);
+  white-space: nowrap;
+}
+.demo-active-gold {
+  background: var(--grad-gold); color: var(--on-gold);
+  border-radius: 6px; padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  box-shadow: 0 3px 12px rgba(201,169,110,.4);
+  transform: translateY(0px) scale(.98);
+  filter: brightness(.96);
+  white-space: nowrap;
+}
+.demo-focus {
+  background: var(--btn-pur-bg); color: #fff;
+  border-radius: 6px; padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  outline: 2px solid var(--gold-mid); outline-offset: 3px;
+  white-space: nowrap;
+}
+
+/* Badge hover demos */
+.demo-badge-hover-gold { background: var(--grad-gold); color: var(--on-gold); filter: brightness(1.08); transform: translateY(-1px); }
+.demo-badge-hover-sci  { background: var(--badge-sci-hbg); color: var(--badge-sci-tx); transform: translateY(-1px); }
+.demo-badge-hover-ol   { background: var(--badge-ol-hbg); color: var(--badge-ol-tx); border: 1.5px solid var(--tx-muted); transform: translateY(-1px); }
+
+/* Card hover demo */
+.demo-card-hover {
+  background: var(--bg-card);
+  border: 1px solid var(--bd-gold);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transform: translateY(-4px);
+}
+[data-mode="dark"]  .demo-card-hover { box-shadow: 0 14px 40px rgba(0,0,0,.45); }
+[data-mode="light"] .demo-card-hover { box-shadow: 0 14px 40px rgba(0,0,0,.16); }
+
+/* ════════════════════════════════════════════════════════════════════════
+   21. CODE BLOCK
+   ════════════════════════════════════════════════════════════════════════ */
+.code {
+  background: var(--code-bg);
+  border-radius: 8px;
+  padding: 18px 22px;
+  overflow-x: auto;
+  border: 1px solid var(--bd-default);
+}
+.code code {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--tx-code);
+  line-height: 1.75;
+  white-space: pre;
+}
+/* Syntax highlight colors */
+.c-hl { color: #B488FF; }   /* selectors / tags */
+.c-v  { color: #88D8B0; }   /* values */
+.c-g  { color: #D4B97E; }   /* variables (gold) */
+.c-cm { color: #5A4D70; }   /* comments */
+
+/* ════════════════════════════════════════════════════════════════════════
+   22. FOOTER
+   ════════════════════════════════════════════════════════════════════════ */
+.foot {
+  background: var(--footer-bg);
+  padding: 28px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.foot-t {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ft-tag);
+  line-height: 1.6;
+}
+.foot-m {
+  font-size: 10px;
+  color: var(--ft-meta);
+  letter-spacing: .06em;
+  text-align: right;
+  line-height: 1.9;
+  text-transform: uppercase;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   23. RESPONSIVE — mobile breakpoint
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 660px) {
+  body { padding: 0 0 60px; }
+  .hero, .sec, .nav, .ch, .foot { padding-left: 22px; padding-right: 22px; }
+  .cards-row, .tiles-3, .tiles-2, .states-grid { grid-template-columns: 1fr; }
+  .type-spec { display: none; }
+  .top-controls { top: 10px; right: 10px; }
+  .dl-btn .dl-lbl { display: none; }
+}
+
+/*
+ * ════════════════════════════════════════════════════════════════════════
+ *  QUICK REFERENCE — DESIGN PRINCIPLES
+ * ════════════════════════════════════════════════════════════════════════
+ *
+ *  01 · CONTRAST FIRST
+ *       Every token is WCAG AA verified. Min 4.5:1 for body text.
+ *       Gold button text (#1A0E00 on gradient) = 10.2:1. Never change.
+ *
+ *  02 · GOLD = PRIMARY CTA
+ *       .btn-gold is the highest-hierarchy CTA. Use once per section max.
+ *       Its hover state PAUSES the float animation (feels responsive).
+ *
+ *  03 · HOVER = 3 PROPERTIES
+ *       Every interactive element changes ALL THREE on hover:
+ *       · Position    → translateY shift
+ *       · Border/Shadow → stronger emphasis
+ *       · Background/Brightness → color or filter change
+ *
+ *  04 · :ACTIVE PRESSES BACK
+ *       Active state always reverses hover lift.
+ *       translateY(0) or translateY(+1px). Communicates physical press.
+ *
+ *  05 · FOCUS = GOLD RING
+ *       outline: 2px solid var(--gold-mid) at outline-offset: 3px
+ *       Applied to EVERY interactive element. Works in both modes.
+ *
+ *  06 · ICONS FOLLOW BACKGROUND
+ *       --icon-color is the single source of truth.
+ *       Dark mode  → #D4B97E  (gold)
+ *       Light mode → #6B4CA3  (purple brand)
+ *       Usage: <ph-icon color="var(--icon-color)" weight="duotone" size="32">
+ *
+ *  07 · HERO WAVE IS A BRAND SIGNATURE
+ *       border-radius: 50% 50% 0 0 / 100% 100% 0 0; height: 90px; left: -5%; width: 110%
+ *       The fill color matches var(--hero-wave) = current page bg.
+ *
+ *  08 · FONTS
+ *       DM Sans      → ALL UI text (buttons, labels, body, nav)
+ *       Cormorant Garamond italic → emotional content ONLY
+ *                                   (pull quotes, hero sub, footer tag)
+ *
+ *  09 · ICON SIZES:  16 · 20 · 24 · 32 · 40 · 48 · 64 px
+ *
+ *  10 · SPACING BASE UNIT: 4px
+ *       4 · 8 · 16 · 24 · 40 · 64 px
+ *
+ * ════════════════════════════════════════════════════════════════════════
+ */
