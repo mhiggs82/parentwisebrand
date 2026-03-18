@@ -297,10 +297,49 @@
     }
 
     /* ═══════════════════════════════════════
+       TOP CONTROLS WRAPPER
+    ═══════════════════════════════════════ */
+    .top-controls {
+      position: fixed; top: 18px; right: 22px; z-index: 200;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── Download button ── */
+    .dl-wrap { position: relative; }
+    .dl-btn {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--tw-bg); border: 1px solid var(--tw-bd);
+      border-radius: 30px; padding: 7px 14px 7px 12px;
+      cursor: pointer; user-select: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.22);
+      color: var(--tw-lbl); font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .dl-btn:hover { border-color: var(--gold-mid); }
+    .dl-drop {
+      display: none;
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--tw-bg); border: 1px solid var(--tw-bd);
+      border-radius: 12px; padding: 6px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+      min-width: 162px; z-index: 300;
+    }
+    .dl-drop.open { display: flex; flex-direction: column; gap: 2px; }
+    .dl-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 14px; border-radius: 8px; cursor: pointer;
+      font-size: 12px; font-weight: 600;
+      color: var(--tw-lbl); background: none; border: none;
+      text-align: left; width: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .dl-item:hover { background: var(--nav-hbg); color: var(--gold-mid); }
+
+    /* ═══════════════════════════════════════
        MODE TOGGLE
     ═══════════════════════════════════════ */
     .tw {
-      position: fixed; top: 18px; right: 22px; z-index: 200;
       display: flex; align-items: center; gap: 9px;
       background: var(--tw-bg); border: 1px solid var(--tw-bd);
       border-radius: 30px; padding: 7px 14px 7px 10px;
@@ -780,17 +819,35 @@
       .hero,.sec,.nav,.ch,.foot { padding-left:22px;padding-right:22px; }
       .cards-row,.tiles-3,.tiles-2,.states-grid { grid-template-columns:1fr; }
       .type-spec { display:none; }
-      .tw { top:10px;right:10px; }
+      .top-controls { top:10px;right:10px; }
+      .dl-btn .dl-lbl { display:none; }
     }
   </style>
 </head>
 <body>
 
-<!-- MODE TOGGLE -->
-<div class="tw" onclick="toggleMode()">
-  <span id="t-ic" style="font-size:14px;line-height:1;">🌙</span>
-  <div class="tw-track"><div class="tw-dot"></div></div>
-  <span class="tw-lbl" id="t-lb">Dark</span>
+<!-- TOP CONTROLS -->
+<div class="top-controls">
+
+  <!-- DOWNLOAD BUTTON -->
+  <div class="dl-wrap">
+    <button class="dl-btn" onclick="toggleDownloadMenu(event)" title="Download brand reference as Markdown">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="dl-lbl">Download</span>
+    </button>
+    <div class="dl-drop" id="dlDrop">
+      <button class="dl-item" onclick="downloadMarkdown('dark')">🌙 Dark Mode</button>
+      <button class="dl-item" onclick="downloadMarkdown('light')">☀️ Light Mode</button>
+    </div>
+  </div>
+
+  <!-- MODE TOGGLE -->
+  <div class="tw" onclick="toggleMode()">
+    <span id="t-ic" style="font-size:14px;line-height:1;">🌙</span>
+    <div class="tw-track"><div class="tw-dot"></div></div>
+    <span class="tw-lbl" id="t-lb">Dark</span>
+  </div>
+
 </div>
 
 <div class="page">
@@ -1246,6 +1303,442 @@
     html.setAttribute('data-mode', dark ? 'light' : 'dark');
     document.getElementById('t-ic').textContent = dark ? '☀️' : '🌙';
     document.getElementById('t-lb').textContent  = dark ? 'Light' : 'Dark';
+  }
+
+  // ── Download helpers ────────────────────────────────────────────────
+  function toggleDownloadMenu(e) {
+    e.stopPropagation();
+    document.getElementById('dlDrop').classList.toggle('open');
+  }
+  function closeDownloadMenu() {
+    document.getElementById('dlDrop').classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dl-wrap')) closeDownloadMenu();
+  });
+
+  function downloadMarkdown(mode) {
+    const md = generateMarkdown(mode);
+    const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = 'parentwise-brand-reference-' + mode + '-mode.md';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    closeDownloadMenu();
+  }
+
+  function generateMarkdown(mode) {
+    const D = mode === 'dark';
+    const M = D ? 'Dark' : 'Light';
+
+    const t = D ? {
+      bgPage:'#1A1A2E', bgAlt:'#120D24', bgCard:'#211545', bgCardFeat:'#2A1A52',
+      bgInset:'#0E0919', bgOverlay:'rgba(107,76,163,.2)', footerBg:'#08040F',
+      txPrimary:'#F0EAF8', txSecondary:'#C8BAE0', txMuted:'#9C8BB8',
+      txLabel:'#C9A96E', txSerif:'#D4B97E', txCode:'#C5B3E0',
+      bdDefault:'rgba(255,255,255,.1)', bdStrong:'rgba(255,255,255,.22)',
+      bdGold:'rgba(212,185,126,.5)', bdPurple:'rgba(107,76,163,.55)',
+      iconColor:'#D4B97E', iconBg:'rgba(212,185,126,.12)',
+      badgeSciBg:'#2D1E50', badgeSciTx:'#C8B4F0',
+      badgePhBg:'#1D1338', badgePhTx:'#B8A8D8',
+      badgeOlTx:'#A897C8', badgeOlBd:'#7A6A98',
+      btnPurBg:'#6B4CA3', btnPurHbg:'#7D5AB8', btnPurTx:'#FFFFFF',
+      btnOlTx:'#C8BAE0', btnOlBd:'rgba(200,186,224,.4)',
+      btnOlHbg:'rgba(255,255,255,.07)', btnOlHbd:'rgba(200,186,224,.7)',
+      btnGolTx:'#D4B97E', btnGolBd:'#C9A96E',
+      btnGolHbg:'rgba(212,185,126,.1)', btnGolHbd:'#D4B97E',
+      cardName:'#F0EAF8', cardPrice:'#D4B97E', cardSub:'#9C8BB8', cardDesc:'#C8BAE0',
+      cbtnOlTx:'#C8BAE0', cbtnOlBd:'rgba(200,186,224,.3)',
+      cbtnOlHtx:'#F0EAF8', cbtnOlHbd:'rgba(200,186,224,.6)', cbtnOlHbg:'rgba(255,255,255,.06)',
+      pullquoteBg:'rgba(107,76,163,.18)', pqBorder:'#C9A96E',
+      tileBg:'#1D1338', tileBd:'rgba(255,255,255,.09)',
+      tileTx1:'#F0EAF8', tileTx2:'#9C8BB8', tileHtx:'#C9A96E',
+      navBg:'#0F0820', navPillBg:'rgba(255,255,255,.07)',
+      navPillTx:'rgba(255,255,255,.6)', navHbg:'rgba(212,185,126,.16)', navHtx:'#D4B97E',
+      codeBg:'#0A0615',
+      twBg:'#211545', twBd:'rgba(255,255,255,.15)', twTrack:'#2D1A50', twDot:'#D4B97E',
+      hsLabelTx:'#9C8BB8', hsValTx:'#D4B97E',
+      txPrimaryContrast:'14.8:1', txSecondaryContrast:'8.1:1'
+    } : {
+      bgPage:'#F5F1E8', bgAlt:'#FFFFFF', bgCard:'#FFFFFF', bgCardFeat:'#FDFAFF',
+      bgInset:'#F0ECF8', bgOverlay:'rgba(107,76,163,.06)', footerBg:'#5A3D8F',
+      txPrimary:'#1A1A2E', txSecondary:'#3D2E5A', txMuted:'#6B5E82',
+      txLabel:'#7A5C1A', txSerif:'#5A3D8F', txCode:'#C5B3E0',
+      bdDefault:'#DDD8EC', bdStrong:'#C5B7D0',
+      bdGold:'rgba(184,148,58,.5)', bdPurple:'rgba(107,76,163,.35)',
+      iconColor:'#6B4CA3', iconBg:'#EDE8F5',
+      badgeSciBg:'#EDE8F5', badgeSciTx:'#3D2070',
+      badgePhBg:'#F0ECF8', badgePhTx:'#3D2070',
+      badgeOlTx:'#5A3D8F', badgeOlBd:'#9C8BB8',
+      btnPurBg:'#5A3D8F', btnPurHbg:'#6B4CA3', btnPurTx:'#FFFFFF',
+      btnOlTx:'#3D2E5A', btnOlBd:'#9C8BB8',
+      btnOlHbg:'rgba(61,46,90,.05)', btnOlHbd:'#5A3D8F',
+      btnGolTx:'#7A5C1A', btnGolBd:'#B8943A',
+      btnGolHbg:'rgba(184,148,58,.08)', btnGolHbd:'#8B6419',
+      cardName:'#1A1A2E', cardPrice:'#7A5C1A', cardSub:'#6B5E82', cardDesc:'#3D2E5A',
+      cbtnOlTx:'#5A3D8F', cbtnOlBd:'#C5B7D0',
+      cbtnOlHtx:'#3D2070', cbtnOlHbd:'#9C8BB8', cbtnOlHbg:'rgba(90,61,143,.04)',
+      pullquoteBg:'rgba(107,76,163,.07)', pqBorder:'#B8943A',
+      tileBg:'#F8F5FF', tileBd:'#DDD8EC',
+      tileTx1:'#1A1A2E', tileTx2:'#6B5E82', tileHtx:'#6B4CA3',
+      navBg:'#5A3D8F', navPillBg:'rgba(255,255,255,.12)',
+      navPillTx:'rgba(255,255,255,.72)', navHbg:'rgba(255,255,255,.22)', navHtx:'#FFFFFF',
+      codeBg:'#1A1A2E',
+      twBg:'#EDE8F5', twBd:'#C5B7D0', twTrack:'#C5B7D0', twDot:'#5A3D8F',
+      hsLabelTx:'#6B5E82', hsValTx:'#5A3D8F',
+      txPrimaryContrast:'16.1:1', txSecondaryContrast:'9.4:1'
+    };
+
+    return [
+`# ParentWise · Brand Design Reference`,
+``,
+`> **v2.3 · March 2026** — ${M} Mode`,
+`> getparentwise.com · offers.marcushiggs.com`,
+``,
+`---`,
+``,
+`## Fixed Brand Colors`,
+``,
+`| Name | Hex | Usage |`,
+`|------|-----|-------|`,
+`| Deep Plum | \`#5A3D8F\` | Primary brand · headers |`,
+`| Brand Purple | \`#6B4CA3\` | CTAs · icons on light |`,
+`| Hero Violet | \`#7B5AB5\` | Gradient start |`,
+`| Deep Indigo | \`#3D2970\` | Gradient end |`,
+`| Honey Gold | \`#D4B97E\` | Button start · icons on dark |`,
+`| Gold Mid | \`#C9A96E\` | Labels · text on dark |`,
+`| Gold Deep | \`#B8943A\` | Button end · text on light |`,
+`| On-Gold Text | \`#1A0E00\` | 10.2:1 contrast — never changes |`,
+`| Warm Cream | \`#F5F1E8\` | Page bg (light) |`,
+`| Greige Canvas | \`#C9C3B4\` | Page surround (both modes) |`,
+`| Near Black | \`#1A1A2E\` | Page bg (dark) |`,
+`| Ghost Lavender | \`#F0EAF8\` | Primary text (dark) |`,
+`| Lavender Tint | \`#EDE8F5\` | Icon bg · hover (light) |`,
+``,
+`---`,
+``,
+`## Gradients`,
+``,
+`| Name | CSS Value |`,
+`|------|-----------|`,
+`| Hero | \`linear-gradient(155deg, #7B5AB5 0%, #5A3D8F 45%, #3D2970 100%)\` |`,
+`| Gold Button | \`linear-gradient(135deg, #D4B97E 0%, #B8943A 100%)\` |`,
+`| Dark Section | \`linear-gradient(180deg, #1A1A2E 0%, #0F0820 100%)\` |`,
+`| Dark Card | \`linear-gradient(135deg, #2A1950 0%, #1A1035 100%)\` |`,
+`| Chapter Bar | \`linear-gradient(90deg, #5A3D8F 0%, #6B4CA3 100%)\` |`,
+``,
+`---`,
+``,
+`## ${M} Mode — Design Tokens`,
+``,
+`### Backgrounds`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--bg-page\` | \`${t.bgPage}\` |`,
+`| \`--bg-alt\` | \`${t.bgAlt}\` |`,
+`| \`--bg-card\` | \`${t.bgCard}\` |`,
+`| \`--bg-card-feat\` | \`${t.bgCardFeat}\` |`,
+`| \`--bg-inset\` | \`${t.bgInset}\` |`,
+`| \`--bg-overlay\` | \`${t.bgOverlay}\` |`,
+`| \`--footer-bg\` | \`${t.footerBg}\` |`,
+``,
+`### Text`,
+``,
+`| Token | Value | Contrast |`,
+`|-------|-------|----------|`,
+`| \`--tx-primary\` | \`${t.txPrimary}\` | ${t.txPrimaryContrast} on bg-page |`,
+`| \`--tx-secondary\` | \`${t.txSecondary}\` | ${t.txSecondaryContrast} |`,
+`| \`--tx-muted\` | \`${t.txMuted}\` | 4.6:1 |`,
+`| \`--tx-label\` | \`${t.txLabel}\` | gold/brown labels |`,
+`| \`--tx-serif\` | \`${t.txSerif}\` | pull-quote serif |`,
+`| \`--tx-code\` | \`${t.txCode}\` | code blocks |`,
+``,
+`### Borders`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--bd-default\` | \`${t.bdDefault}\` |`,
+`| \`--bd-strong\` | \`${t.bdStrong}\` |`,
+`| \`--bd-gold\` | \`${t.bdGold}\` |`,
+`| \`--bd-purple\` | \`${t.bdPurple}\` |`,
+``,
+`### Icons`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--icon-color\` | \`${t.iconColor}\` |`,
+`| \`--icon-bg\` | \`${t.iconBg}\` |`,
+``,
+`### Badges`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--badge-sci-bg\` | \`${t.badgeSciBg}\` |`,
+`| \`--badge-sci-tx\` | \`${t.badgeSciTx}\` |`,
+`| \`--badge-ph-bg\` | \`${t.badgePhBg}\` |`,
+`| \`--badge-ph-tx\` | \`${t.badgePhTx}\` |`,
+`| \`--badge-ol-tx\` | \`${t.badgeOlTx}\` |`,
+`| \`--badge-ol-bd\` | \`${t.badgeOlBd}\` |`,
+``,
+`### Buttons`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--btn-pur-bg\` | \`${t.btnPurBg}\` |`,
+`| \`--btn-pur-hbg\` | \`${t.btnPurHbg}\` |`,
+`| \`--btn-pur-tx\` | \`${t.btnPurTx}\` |`,
+`| \`--btn-ol-tx\` | \`${t.btnOlTx}\` |`,
+`| \`--btn-ol-bd\` | \`${t.btnOlBd}\` |`,
+`| \`--btn-ol-hbg\` | \`${t.btnOlHbg}\` |`,
+`| \`--btn-ol-hbd\` | \`${t.btnOlHbd}\` |`,
+`| \`--btn-gol-tx\` | \`${t.btnGolTx}\` |`,
+`| \`--btn-gol-bd\` | \`${t.btnGolBd}\` |`,
+`| \`--btn-gol-hbg\` | \`${t.btnGolHbg}\` |`,
+`| \`--btn-gol-hbd\` | \`${t.btnGolHbd}\` |`,
+``,
+`### Cards`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--card-name\` | \`${t.cardName}\` |`,
+`| \`--card-price\` | \`${t.cardPrice}\` |`,
+`| \`--card-sub\` | \`${t.cardSub}\` |`,
+`| \`--card-desc\` | \`${t.cardDesc}\` |`,
+`| \`--cbtn-ol-tx\` | \`${t.cbtnOlTx}\` |`,
+`| \`--cbtn-ol-bd\` | \`${t.cbtnOlBd}\` |`,
+`| \`--cbtn-ol-htx\` | \`${t.cbtnOlHtx}\` |`,
+`| \`--cbtn-ol-hbd\` | \`${t.cbtnOlHbd}\` |`,
+`| \`--cbtn-ol-hbg\` | \`${t.cbtnOlHbg}\` |`,
+``,
+`### Navigation`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--nav-bg\` | \`${t.navBg}\` |`,
+`| \`--nav-pill-bg\` | \`${t.navPillBg}\` |`,
+`| \`--nav-pill-tx\` | \`${t.navPillTx}\` |`,
+`| \`--nav-hbg\` | \`${t.navHbg}\` |`,
+`| \`--nav-htx\` | \`${t.navHtx}\` |`,
+``,
+`### Miscellaneous`,
+``,
+`| Token | Value |`,
+`|-------|-------|`,
+`| \`--pullquote-bg\` | \`${t.pullquoteBg}\` |`,
+`| \`--pq-border\` | \`${t.pqBorder}\` |`,
+`| \`--tile-bg\` | \`${t.tileBg}\` |`,
+`| \`--tile-bd\` | \`${t.tileBd}\` |`,
+`| \`--tile-tx1\` | \`${t.tileTx1}\` |`,
+`| \`--tile-tx2\` | \`${t.tileTx2}\` |`,
+`| \`--tile-htx\` | \`${t.tileHtx}\` |`,
+`| \`--code-bg\` | \`${t.codeBg}\` |`,
+`| \`--tw-bg\` | \`${t.twBg}\` |`,
+`| \`--tw-bd\` | \`${t.twBd}\` |`,
+`| \`--tw-track\` | \`${t.twTrack}\` |`,
+`| \`--tw-dot\` | \`${t.twDot}\` |`,
+`| \`--hs-label-tx\` | \`${t.hsLabelTx}\` |`,
+`| \`--hs-val-tx\` | \`${t.hsValTx}\` |`,
+``,
+`---`,
+``,
+`## Typography`,
+``,
+`| Role | Family | Size | Weight | Notes |`,
+`|------|--------|------|--------|-------|`,
+`| Display | DM Sans | clamp(24px–40px) | 700 | Hero title |`,
+`| H1 | DM Sans | 26px | 700 | Section headings |`,
+`| Serif / Pull Quote | Cormorant Garamond | 21px | 400 italic | Emotional content |`,
+`| Body | DM Sans | 16px | 400 | Line-height 1.8 |`,
+`| Gold Label | DM Sans | 12px | 700 | UPPERCASE, 0.14em spacing |`,
+`| Caption | DM Sans | 13px | 400 | Sub-labels |`,
+``,
+`---`,
+``,
+`## Component Specifications`,
+``,
+`### Gold Button (Primary CTA)`,
+``,
+`\`\`\`css`,
+`/* Base */`,
+`background: linear-gradient(135deg, #D4B97E 0%, #B8943A 100%);`,
+`color: #1A0E00; /* 10.2:1 contrast */`,
+`border-radius: 8px; padding: 12px 24px;`,
+`animation: goldPulse 3s infinite, floatY 4s infinite;`,
+``,
+`/* :hover */`,
+`transform: translateY(-3px) scale(1.01);`,
+`box-shadow: 0 12px 40px rgba(201,169,110,.65);`,
+`animation-play-state: paused;`,
+`filter: brightness(1.06);`,
+``,
+`/* :active */`,
+`transform: translateY(0) scale(.98);`,
+`box-shadow: 0 3px 12px rgba(201,169,110,.4);`,
+``,
+`/* :focus-visible */`,
+`outline: 2px solid #C9A96E; outline-offset: 3px;`,
+`\`\`\``,
+``,
+`### Purple Button`,
+``,
+`\`\`\`css`,
+`background: ${t.btnPurBg}; color: ${t.btnPurTx};`,
+`border-radius: 8px;`,
+`/* :hover */ background: ${t.btnPurHbg}; transform: translateY(-2px);`,
+`/* :active */ background: #5A3D8F; transform: translateY(1px);`,
+`\`\`\``,
+``,
+`### Outline Button`,
+``,
+`\`\`\`css`,
+`color: ${t.btnOlTx}; border: 1px solid ${t.btnOlBd};`,
+`/* :hover */ background: ${t.btnOlHbg}; border-color: ${t.btnOlHbd};`,
+`           transform: translateY(-2px);`,
+`\`\`\``,
+``,
+`### Gold Outline Button`,
+``,
+`\`\`\`css`,
+`color: ${t.btnGolTx}; border: 1px solid ${t.btnGolBd};`,
+`/* :hover */ background: ${t.btnGolHbg}; border-color: ${t.btnGolHbd};`,
+`\`\`\``,
+``,
+`---`,
+``,
+`## Motion Tokens`,
+``,
+`| Name | Definition |`,
+`|------|-----------|`,
+`| Fade Slide In | \`0.6s cubic-bezier(.22,1,.36,1)\` — opacity 0→1, translateY 22px→0 |`,
+`| Gold Pulse | \`goldPulse 3s infinite\` — box-shadow glow oscillation |`,
+`| Float Y | \`floatY 4s infinite\` — translateY 0 → -4px → 0 |`,
+`| Shine Sweep | \`shimmer\` on ::before — skewed element left -80% → 130% |`,
+`| Orb Drift | \`orbDrift\` — hero bg orbs, translate(20px, -15px) staggered |`,
+`| Mode Switch | \`background-color .35s ease, color .28s ease\` |`,
+``,
+`---`,
+``,
+`## Spacing System`,
+``,
+`| Token | Value | Name |`,
+`|-------|-------|------|`,
+`| sp-1 | \`4px\` | Tight |`,
+`| sp-2 | \`8px\` | Compact |`,
+`| sp-3 | \`16px\` | Base |`,
+`| sp-4 | \`24px\` | Section |`,
+`| sp-5 | \`40px\` | Open |`,
+`| sp-6 | \`64px\` | Hero |`,
+``,
+`> **Base unit: 4px.** All spacing is a multiple of the base unit.`,
+``,
+`---`,
+``,
+`## Radius System`,
+``,
+`| Value | Usage |`,
+`|-------|-------|`,
+`| \`6px\` | Badges |`,
+`| \`8px\` | Buttons |`,
+`| \`12px\` | Cards |`,
+`| \`16px\` | Containers |`,
+`| \`50% 50% 0 0 / 100% 100% 0 0\` | Hero wave curve |`,
+``,
+`---`,
+``,
+`## Icon System`,
+``,
+`**Library:** Phosphor Icons (duotone weight) · \`@phosphor-icons/webcomponents@2.1\``,
+``,
+`**Color rule:** \`--icon-color\` = \`${t.iconColor}\` (${D ? 'gold on dark' : 'purple on light'})`,
+``,
+`### Core Icons`,
+``,
+`| Icon | Tag | Product |`,
+`|------|-----|---------|`,
+`| Plant | \`<ph-plant>\` | First Steps |`,
+`| Globe | \`<ph-globe-hemisphere-west>\` | Circle |`,
+`| Compass | \`<ph-compass>\` | Pathway |`,
+`| Shield Check | \`<ph-shield-check>\` | Trust / Safety |`,
+`| Users Three | \`<ph-users-three>\` | Community |`,
+`| Heart | \`<ph-heart>\` | Care |`,
+`| Flower Lotus | \`<ph-flower-lotus>\` | Brand Mark |`,
+`| Brain | \`<ph-brain>\` | Science |`,
+`| Chat Circle Dots | \`<ph-chat-circle-dots>\` | Conversation |`,
+`| Lightbulb | \`<ph-lightbulb>\` | Insight |`,
+`| Seal Check | \`<ph-seal-check>\` | Credibility |`,
+`| Book Open | \`<ph-book-open>\` | Learning |`,
+`| Hand Heart | \`<ph-hand-heart>\` | Empathy |`,
+`| Sparkle | \`<ph-sparkle>\` | Delight |`,
+`| Arrow Circle Right | \`<ph-arrow-circle-right>\` | Navigation |`,
+``,
+`### Icon Sizes`,
+``,
+`\`16px · 20px · 24px · 32px · 40px · 48px · 64px\``,
+``,
+`\`\`\`html`,
+`<ph-compass color="var(--icon-color)" weight="duotone" size="32"></ph-compass>`,
+`\`\`\``,
+``,
+`---`,
+``,
+`## Design Principles`,
+``,
+`| # | Principle | Rule |`,
+`|---|-----------|------|`,
+`| 01 | Contrast first | Every token WCAG AA. Text minimum 4.5:1. Gold button text #1A1000 = 10.2:1. |`,
+`| 02 | Gold = primary CTA | The animated gold button is highest-hierarchy. One per section max. |`,
+`| 03 | Hover = 3 properties | Every interactive: position (translateY), border/shadow, background/brightness. |`,
+`| 04 | :active presses back | Active reverses hover lift — translateY(0) or translateY(1px). |`,
+`| 05 | Focus = gold ring | \`2px solid var(--gold-mid)\` at \`3px\` offset on every interactive element. |`,
+`| 06 | Icons follow bg | \`--icon-color\` is single source of truth. Purple on light, gold on dark. |`,
+``,
+`---`,
+``,
+`## Code Reference`,
+``,
+`\`\`\`css`,
+`/* ── Gold button — all states ───────────────────────── */`,
+`.btn-gold { animation: goldPulse 3s infinite, floatY 4s infinite; }`,
+`.btn-gold:hover  { transform: translateY(-3px) scale(1.01);`,
+`                   box-shadow: 0 12px 40px rgba(201,169,110,.65);`,
+`                   animation-play-state: paused; filter: brightness(1.06); }`,
+`.btn-gold:active { transform: translateY(0) scale(.98);`,
+`                   box-shadow: 0 3px 12px rgba(201,169,110,.4); }`,
+`.btn-gold:focus-visible { outline: 2px solid var(--gold-mid); outline-offset: 3px; }`,
+``,
+`/* ── Purple button ──────────────────────────────────── */`,
+`.btn-purple:hover  { background: var(--btn-pur-hbg); transform: translateY(-2px); }`,
+`.btn-purple:active { background: var(--purple-deep); transform: translateY(1px); }`,
+``,
+`/* ── Outline button ─────────────────────────────────── */`,
+`.btn-ol:hover { background: var(--btn-ol-hbg); border-color: var(--btn-ol-hbd);`,
+`                color: var(--tx-primary); transform: translateY(-2px); }`,
+``,
+`/* ── Badges ─────────────────────────────────────────── */`,
+`.b-gold:hover  { filter: brightness(1.08); transform: translateY(-1px); }`,
+`.b-sci:hover   { background: var(--badge-sci-hbg); transform: translateY(-1px); }`,
+`.b-ol:hover    { background: var(--badge-ol-hbg); border-color: var(--tx-muted); }`,
+``,
+`/* ── Cards ──────────────────────────────────────────── */`,
+`.card:hover      { transform: translateY(-4px); border-color: var(--bd-gold); }`,
+`.card.feat:hover { box-shadow: 0 14px 40px rgba(212,185,126,.25); }`,
+`.cbtn-gold:hover { filter: brightness(1.08); transform: translateY(-1px); }`,
+`.cbtn-ol:hover   { background: var(--cbtn-ol-hbg); color: var(--cbtn-ol-htx); }`,
+``,
+`/* ── Icon color rule ────────────────────────────────── */`,
+`[data-mode="dark"]  { --icon-color: #D4B97E; } /* gold on dark  */`,
+`[data-mode="light"] { --icon-color: #6B4CA3; } /* purple on light */`,
+`\`\`\``,
+``,
+`---`,
+``,
+`*ParentWise Brand Reference · v2.3 · getparentwise.com*`,
+    ].join('\n');
   }
 
   // Scroll fade-in
